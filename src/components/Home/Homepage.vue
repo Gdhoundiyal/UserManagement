@@ -1,0 +1,41 @@
+<script setup>
+import SideScreen from './sidebar/side-screen.vue';
+import homeScreen from './homeScreen/homeScreen.vue'
+
+
+</script>
+
+<template>
+  <div id="App-Container">
+    <div id="Header-Sec">
+      <SideScreen/>
+    </div>
+
+    <div id="Chat-Sec">
+        <homeScreen/>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+#App-Container {
+  display: flex;
+  overflow: hidden;
+}
+
+#Header-Sec {
+  height: 100vh;
+  width: 20vw;
+  background-color: #2e2e2e;
+  color: #878a92;
+}
+
+#Chat-Sec {
+  height: 100vh;
+  width: 80vw;
+  background: #262626;
+  color: #878a92;
+}
+
+
+</style>
