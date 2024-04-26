@@ -1,6 +1,17 @@
 <script setup>
 import SideScreen from './sidebar/side-screen.vue';
-import homeScreen from './homeScreen/homeScreen.vue'
+import homeScreen from './homeScreen/homeScreen.vue';
+
+import { useloginStore } from '@/stores/login';
+
+const store = useloginStore()
+
+const access_token = localStorage.getItem('accessToken');
+console.log(access_token)
+
+store.$patch((state)=>{
+state.Authenticate = access_token
+})
 
 
 </script>

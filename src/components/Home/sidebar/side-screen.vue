@@ -3,7 +3,7 @@
 const changeScreen = (event) =>{
   const name = event.currentTarget.getAttribute('name');
 
-console.log(name)
+
 }
 
 </script>
@@ -14,7 +14,7 @@ console.log(name)
           <p>JustConnect</p>
         </div>
         <div id="icons">
-          <RouterLink to="/home/Feed" class="routestyle">
+          <RouterLink to="/home/" class="routestyle">
         <div class="icon-div" name="Feed" @click="changeScreen">
             <i class="pi pi-th-large" id="styles"></i>
             <p>Home</p>

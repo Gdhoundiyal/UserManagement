@@ -30,7 +30,8 @@ const userDetails = [
     <div class="navcontainer">
         <Navscreen/>
         <div class="userfeedcontainer" >
-            <router-view />
+            <router-view/>
+           
         </div>
     </div>
 </template>

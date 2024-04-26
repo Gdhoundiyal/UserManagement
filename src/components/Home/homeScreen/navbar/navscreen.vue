@@ -1,4 +1,23 @@
 <script setup>
+import {useRouter} from 'vue-router';
+import { useloginStore } from '@/stores/login';
+import { storeToRefs } from 'pinia';
+
+const store = useloginStore()
+const {Authenticate} = storeToRefs(store)
+console.log(Authenticate.value)
+
+const route = useRouter()
+
+const logout = () => {
+    store.$patch((state)=>{
+        state.Authenticate = false
+    })
+    localStorage.removeItem('accesstoken');
+    route.push('/')
+    console.log("logout")
+
+}
 </script>
 
 <template>
@@ -7,8 +26,9 @@
             <!-- <i class="pi pi-align-justify"></i> -->
             <p>Section Name</p>
         </div>
+       
         <div>
-            <div class="imagediv">
+            <div class="imagediv" @click="logout">
                 <img src="../../../../assets/adamzempa.jpg" alt="an image of a boy" height="45px" width="45px" class="image"/>
             </div>
         </div>

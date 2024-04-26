@@ -3,7 +3,9 @@ import { useloginStore } from '@/stores/login'
 import { storeToRefs } from 'pinia'
 import { RouterLink, useRouter } from 'vue-router'
 import { useForm } from 'vee-validate';
-import * as yup  from 'yup'
+import * as yup from 'yup'
+import axios from 'axios';
+import { BASE_URL } from '@/assets/assets';
 
 
 // store //
@@ -15,7 +17,7 @@ console.log('from store', Authenticate.value, isloading.value)
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string().min(6).required().matches(/[A-Z]/, 'Contain at least one uppercase letter')
-  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Contain at least one special character')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Contain at least one special character')
 });
 
 const { defineField, errors, handleSubmit } = useForm({
@@ -30,36 +32,67 @@ const route = useRouter()
 
 
 // local variables //
+// const name = localStorage.getItem("name")
+// console.log("name", name)
 
-
-
+const token = localStorage.getItem('accessToken');
 
 
 // local Functions //
 
 const onSubmit = handleSubmit(values => {
-
-  store.updateDetails(values)
- 
+  
   store.$patch((state) => {
-  state.isloading = true
-})
+    state.isloading = true
+  })
 
-setTimeout(() => {
-  store.$patch((state) => {
-  state.isloading = false
-  route.push("/home")
-})
-}, 4000);
+  axios.post(`${BASE_URL}login`, {
+    username: values.username,
+    password: values.password
+  }).then(
+    (response) => {
+        console.log(response);
+        if(response?.data?.access_token){
+          store.updateDetails(values)
+          localStorage.setItem('accessToken', response.data.access_token)
+          store.$patch((state) => {
+            state.isloading = false;
+            state.Authenticate = true;
+          });
+          route.push("/home");
+          alert("user log in Successfully");
+        }else if(response?.data?.status== false){
+          console.log(response)
+          store.$patch((state) => {
+            state.isloading = false;
+          });
+          alert(response?.data?.detail);
+        }
+      },
+      (error) => {
+        store.$patch((state) => {
+          state.isloading = false;
+        });
+        console.log(error);
+      }
+  )
+
+  // setTimeout(() => {
+  //   store.$patch((state) => {
+  //   state.isloading = false
+  //   route.push("/home")
+  // })
+  // }, 4000);
 
 });
+
 // console.log(Values)
 </script>
 
 <template>
- 
+
   <div class="Container">
-   
+
     <div class="Right-cont">
       <div class="logindiv">
         <div>
@@ -68,27 +101,18 @@ setTimeout(() => {
             <p>Log in to continue with JustConnect</p>
           </div>
         </div>
+      {{ token }}
         <form @submit="onSubmit">
           <div class="usernamediv">
             <label class="usernametext" for="name">Username</label>
-            <input
-              class="usernameinputbox"
-              placeholder="Enter Username"
-              type="text"
-              v-model="username"
-              v-bind="usernameAttrs"
-            />
+            <input class="usernameinputbox" placeholder="Enter Username" type="text" v-model="username"
+              v-bind="usernameAttrs" />
             <span class="errormsg">{{ errors.username }}</span>
           </div>
           <div class="userpassworddiv">
             <label class="userpasswordtext" for="password">Password</label>
-            <input
-              class="userpasswordinputbox"
-              placeholder="Enter Password"
-              type="password"
-              v-model="password"
-              v-bind="passwordAttrs"
-            />
+            <input class="userpasswordinputbox" placeholder="Enter Password" type="password" v-model="password"
+              v-bind="passwordAttrs" />
             <span class="errormsg">{{ errors.password }}</span>
           </div>
           <div class="Loginbtndiv">
@@ -105,7 +129,7 @@ setTimeout(() => {
           </div>
           <div class="socialicons">
             <div class="piDiv">
-            <i class="pi pi-facebook"></i>
+              <i class="pi pi-facebook"></i>
             </div>
             <div class="piDiv">
               <i class="pi pi-twitter"></i>
@@ -122,7 +146,7 @@ setTimeout(() => {
         </div>
       </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -143,7 +167,7 @@ setTimeout(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 55vw; 
+  width: 55vw;
   padding: 20px;
   background-color: #888;
   border-radius: 10px;
@@ -152,10 +176,10 @@ setTimeout(() => {
 
 .logindiv {
   width: 35vw;
-    padding: 30px;
-    background-color: #888;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #888;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -163,15 +187,15 @@ setTimeout(() => {
   text-align: center;
 }
 
-.heading  h3{
+.heading h3 {
   font-size: 29px;
   margin: 0 0 10px 0;
 }
 
 .heading p {
-  
+
   font-size: 20px;
-  margin:  20px 0;
+  margin: 20px 0;
 }
 
 .usernamediv,
@@ -182,12 +206,13 @@ setTimeout(() => {
   display: flex;
   flex-direction: column;
 }
-.userpassworddiv{
-padding-bottom: 10px;
+
+.userpassworddiv {
+  padding-bottom: 10px;
 }
 
 .usernametext,
-.userpasswordtext{
+.userpasswordtext {
   padding-bottom: 10px;
 }
 
@@ -200,10 +225,10 @@ padding-bottom: 10px;
   box-sizing: border-box;
 }
 
-.errormsg{
+.errormsg {
   color: darkred;
-   margin: 7px 0px 5px 5px;
-} 
+  margin: 7px 0px 5px 5px;
+}
 
 .Remembercheckbox {
   margin-right: 10px;
@@ -219,15 +244,16 @@ padding-bottom: 10px;
   cursor: pointer;
 }
 
-.btnspinner{
+.btnspinner {
   padding: 5px;
 }
 
 .pi-spin {
   font-size: 16px;
-    padding: 5px;
-    color: white;
+  padding: 5px;
+  color: white;
 }
+
 .Signinwithdiv {
   display: flex;
   align-items: center;
@@ -244,11 +270,11 @@ padding-bottom: 10px;
 
 .signinwithtext {
   margin: 0 10px;
-    text-transform: uppercase;
-    font-size: 14px;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.piDiv{
+.piDiv {
   width: 5vw;
   border: 1px solid black;
   border-radius: 4px;
@@ -267,20 +293,17 @@ padding-bottom: 10px;
   padding-top: 7px;
 }
 
-.Registerdiv{
+.Registerdiv {
   text-align: center;
 }
-.Registercontent{
+
+.Registercontent {
   text-align: center;
   font-size: 16px;
-    padding-top: 15px;
-    color: black
+  padding-top: 15px;
+  color: black
 }
 
 /* Media Query for responsiveness */
-@media (max-width: 768px) {
-
-
- 
-}
+@media (max-width: 768px) {}
 </style>
