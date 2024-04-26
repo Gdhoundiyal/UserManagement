@@ -31,26 +31,21 @@ const route = useRouter()
 
 // local variables //
 
-
-
-
-
 // local Functions //
 
 const onSubmit = handleSubmit(values => {
-
   store.updateDetails(values)
  
   store.$patch((state) => {
   state.isloading = true
 })
 
-setTimeout(() => {
-  store.$patch((state) => {
-  state.isloading = false
-  route.push("/home")
-})
-}, 4000);
+// setTimeout(() => {
+//   store.$patch((state) => {
+//   state.isloading = false
+//   route.push("/home")
+// })
+// }, 4000);
 
 });
 // console.log(Values)
