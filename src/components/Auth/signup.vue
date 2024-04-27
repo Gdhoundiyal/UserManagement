@@ -148,7 +148,7 @@ const onSubmit = handleSubmit((vlaues) => {
         </form>
         <div class="Registerdiv">
           <p class="Registercontent">
-            Already have an account ? <RouterLink to="/">Login</RouterLink>
+            Already have an account ? <RouterLink to="/" class="signup">Login</RouterLink>
           </p>
         </div>
       </div>
@@ -161,9 +161,10 @@ const onSubmit = handleSubmit((vlaues) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   width: 100vw;
-  background-color: #777;
+  background-color: #201d22;
+  color: white;
+  
 }
 
 /* Right container */
@@ -172,18 +173,19 @@ const onSubmit = handleSubmit((vlaues) => {
   justify-content: center;
   align-items: center;
   width: 55vw;
-  padding: 20px;
-  background-color: #888;
+  margin: 20px;
+  background-color: #2c282e;
   border-radius: 10px;
-  padding: 30px;
+  scrollbar-width: none;
 }
 
 .logindiv {
   width: 35vw;
-  padding: 30px;
-  background-color: #888;
+  padding: 20px 30px;
+  background-color: #2c282e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ 
 }
 
 .heading {
@@ -228,21 +230,23 @@ const onSubmit = handleSubmit((vlaues) => {
 .useremailinputbox,
 .userpasswordinputbox {
   width: 100%;
-  padding: 7px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
+  background-color: #201d22;
+  color: #fff
 }
 
 .errormsg {
-  color: darkred;
+  color: #bf3030;
   margin: 7px 0px 5px 5px;
 }
 
 .loginbtn {
   width: 100%;
   padding: 9px;
-  background-color: #007bff;
+  background-color: #6838cf;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -281,13 +285,12 @@ const onSubmit = handleSubmit((vlaues) => {
 
 .piDiv {
   width: 5vw;
-  border: 1px solid black;
   border-radius: 4px;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #898e8e;
+  background-color: #2c282e;;
   padding-top: 7px;
 }
 
@@ -305,10 +308,12 @@ const onSubmit = handleSubmit((vlaues) => {
   text-align: center;
   font-size: 16px;
   padding-top: 15px;
-  color: black;
   margin: 5px 0;
 }
 
+.signup {
+  color: #6838cf;
+}
 /* Media Query for responsiveness */
 @media (max-width: 768px) {}
 </style>

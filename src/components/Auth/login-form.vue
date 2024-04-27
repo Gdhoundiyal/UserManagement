@@ -11,7 +11,7 @@ import { BASE_URL } from '@/assets/assets';
 // store //
 const store = useloginStore()
 const { Authenticate, isloading } = storeToRefs(store)
-console.log('from store', Authenticate.value, isloading.value)
+
 
 //Validation//
 const schema = yup.object({
@@ -27,21 +27,19 @@ const { defineField, errors, handleSubmit } = useForm({
 const [username, usernameAttrs] = defineField('username');
 const [password, passwordAttrs] = defineField('password');
 
+
 // Route //
 const route = useRouter()
 
 
 // local variables //
-// const name = localStorage.getItem("name")
-// console.log("name", name)
 
-const token = localStorage.getItem('accessToken');
 
 
 // local Functions //
 
 const onSubmit = handleSubmit(values => {
-  
+
   store.$patch((state) => {
     state.isloading = true
   })
@@ -55,9 +53,10 @@ const onSubmit = handleSubmit(values => {
         if(response?.data?.access_token){
           store.updateDetails(values)
           localStorage.setItem('accessToken', response.data.access_token)
+          const token = localStorage.getItem('accessToken');
           store.$patch((state) => {
             state.isloading = false;
-            state.Authenticate = true;
+            state.Authenticate = token;
           });
           route.push("/home");
           alert("user log in Successfully");
@@ -77,12 +76,6 @@ const onSubmit = handleSubmit(values => {
       }
   )
 
-  // setTimeout(() => {
-  //   store.$patch((state) => {
-  //   state.isloading = false
-  //   route.push("/home")
-  // })
-  // }, 4000);
 
 });
 
@@ -101,8 +94,7 @@ const onSubmit = handleSubmit(values => {
             <p>Log in to continue with JustConnect</p>
           </div>
         </div>
-      {{ token }}
-        <form @submit="onSubmit">
+        <form @submit="onSubmit" >
           <div class="usernamediv">
             <label class="usernametext" for="name">Username</label>
             <input class="usernameinputbox" placeholder="Enter Username" type="text" v-model="username"
@@ -119,7 +111,7 @@ const onSubmit = handleSubmit(values => {
             <button v-if="isloading" class="loginbtn btnspinner">
               <i class="pi pi-spin pi-spinner-dotted"></i>
             </button>
-            <button v-else class="loginbtn">login
+            <button v-else class="loginbtn">Login
             </button>
           </div>
           <div class="Signinwithdiv">
@@ -141,7 +133,7 @@ const onSubmit = handleSubmit(values => {
         </form>
         <div class="Registerdiv">
           <p class="Registercontent">
-            Don't have an account ? <RouterLink to="/signup">Sign Up</RouterLink>
+            Don't have an account ? <RouterLink to="/signup" class="signup">Sign Up</RouterLink>
           </p>
         </div>
       </div>
@@ -158,7 +150,8 @@ const onSubmit = handleSubmit(values => {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #777;
+  background-color: #201d22;
+  color: white;
 }
 
 
@@ -169,7 +162,7 @@ const onSubmit = handleSubmit(values => {
   align-items: center;
   width: 55vw;
   padding: 20px;
-  background-color: #888;
+  background-color: #2c282e;
   border-radius: 10px;
   padding: 30px;
 }
@@ -177,7 +170,7 @@ const onSubmit = handleSubmit(values => {
 .logindiv {
   width: 35vw;
   padding: 30px;
-  background-color: #888;
+  background-color: #2c282e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
@@ -220,13 +213,15 @@ const onSubmit = handleSubmit(values => {
 .userpasswordinputbox {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
+  background-color: #201d22;
+  color: #fff
 }
 
 .errormsg {
-  color: darkred;
+  color: #bf3030;
   margin: 7px 0px 5px 5px;
 }
 
@@ -237,7 +232,7 @@ const onSubmit = handleSubmit(values => {
 .loginbtn {
   width: 100%;
   padding: 9px;
-  background-color: #007bff;
+  background-color: #6838cf;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -276,13 +271,13 @@ const onSubmit = handleSubmit(values => {
 
 .piDiv {
   width: 5vw;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 4px;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #898e8e;
+  background-color: #2c282e;
   padding-top: 7px;
 
 }
@@ -300,10 +295,12 @@ const onSubmit = handleSubmit(values => {
 .Registercontent {
   text-align: center;
   font-size: 16px;
-  padding-top: 15px;
-  color: black
+  padding-top: 15px; 
+ 
 }
-
+.signup {
+  color: #6838cf;
+}
 /* Media Query for responsiveness */
 @media (max-width: 768px) {}
 </style>

@@ -1,8 +1,8 @@
-import { isBooleanAttr } from '@vue/shared'
+
 import {defineStore} from 'pinia'
 
-const token = localStorage.getItem('accessTOken')
-console.log(isBooleanAttr(token))
+const token = localStorage.getItem('accessToken')
+// console.log('from login store',token)
 
 export const useloginStore = defineStore("Login",{
   state: () => ({

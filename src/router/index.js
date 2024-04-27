@@ -29,7 +29,7 @@ const router = createRouter({
       meta: { requiresAuth: false },
     },
     {
-      path: "/home",
+      path: "/home/",
       name: "Home",
       component: Homepage,
       meta: { requiresAuth: true },
@@ -77,17 +77,19 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useloginStore();
   const { Authenticate } = storeToRefs(store);
+  const token = localStorage.getItem('accessToken')
+  store.$patch((state) => {
+    state.Authenticate = token
+  })
   
-  console.log(to.meta.requiresAuth,Authenticate.value )
-  console.log(to.meta.requiresAuth,Authenticate.value)
   if (to.meta.requiresAuth && !Authenticate.value) {
-    console.log("1st block")
-    next({ name: 'login' });
+    // console.log("1st block")
+    next( '/' );
   } else if (!to.meta.requiresAuth && Authenticate.value) {
-    console.log("2nd block")
-    next({ name: 'Home' });
+    // console.log("2nd block")
+    next( '/Home/' );
   } else {
-    console.log("else block")
+    // console.log("else block")
     next();
   }
 });
