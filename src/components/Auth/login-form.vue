@@ -3,19 +3,21 @@ import { useloginStore } from '@/stores/login'
 import { storeToRefs } from 'pinia'
 import { RouterLink, useRouter } from 'vue-router'
 import { useForm } from 'vee-validate';
-import * as yup  from 'yup'
+import * as yup from 'yup'
+import axios from 'axios';
+import { BASE_URL } from '@/assets/assets';
 
 
 // store //
 const store = useloginStore()
 const { Authenticate, isloading } = storeToRefs(store)
-console.log('from store', Authenticate.value, isloading.value)
+
 
 //Validation//
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string().min(6).required().matches(/[A-Z]/, 'Contain at least one uppercase letter')
-  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Contain at least one special character')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Contain at least one special character')
 });
 
 const { defineField, errors, handleSubmit } = useForm({
@@ -25,36 +27,65 @@ const { defineField, errors, handleSubmit } = useForm({
 const [username, usernameAttrs] = defineField('username');
 const [password, passwordAttrs] = defineField('password');
 
+
 // Route //
 const route = useRouter()
 
 
 // local variables //
 
+
+
 // local Functions //
 
 const onSubmit = handleSubmit(values => {
-  store.updateDetails(values)
- 
-  store.$patch((state) => {
-  state.isloading = true
-})
 
-// setTimeout(() => {
-//   store.$patch((state) => {
-//   state.isloading = false
-//   route.push("/home")
-// })
-// }, 4000);
+  store.$patch((state) => {
+    state.isloading = true
+  })
+
+  axios.post(`${BASE_URL}login`, {
+    username: values.username,
+    password: values.password
+  }).then(
+    (response) => {
+        console.log(response);
+        if(response?.data?.access_token){
+          store.updateDetails(values)
+          localStorage.setItem('accessToken', response.data.access_token)
+          const token = localStorage.getItem('accessToken');
+          store.$patch((state) => {
+            state.isloading = false;
+            state.Authenticate = token;
+          });
+          route.push("/home");
+          alert("user log in Successfully");
+        }else if(response?.data?.status== false){
+          console.log(response)
+          store.$patch((state) => {
+            state.isloading = false;
+          });
+          alert(response?.data?.detail);
+        }
+      },
+      (error) => {
+        store.$patch((state) => {
+          state.isloading = false;
+        });
+        console.log(error);
+      }
+  )
+
 
 });
+
 // console.log(Values)
 </script>
 
 <template>
- 
+
   <div class="Container">
-   
+
     <div class="Right-cont">
       <div class="logindiv">
         <div>
@@ -63,34 +94,24 @@ const onSubmit = handleSubmit(values => {
             <p>Log in to continue with JustConnect</p>
           </div>
         </div>
-        <form @submit="onSubmit">
+        <form @submit="onSubmit" >
           <div class="usernamediv">
             <label class="usernametext" for="name">Username</label>
-            <input
-              class="usernameinputbox"
-              placeholder="Enter Username"
-              type="text"
-              v-model="username"
-              v-bind="usernameAttrs"
-            />
+            <input class="usernameinputbox" placeholder="Enter Username" type="text" v-model="username"
+              v-bind="usernameAttrs" />
             <span class="errormsg">{{ errors.username }}</span>
           </div>
           <div class="userpassworddiv">
             <label class="userpasswordtext" for="password">Password</label>
-            <input
-              class="userpasswordinputbox"
-              placeholder="Enter Password"
-              type="password"
-              v-model="password"
-              v-bind="passwordAttrs"
-            />
+            <input class="userpasswordinputbox" placeholder="Enter Password" type="password" v-model="password"
+              v-bind="passwordAttrs" />
             <span class="errormsg">{{ errors.password }}</span>
           </div>
           <div class="Loginbtndiv">
             <button v-if="isloading" class="loginbtn btnspinner">
               <i class="pi pi-spin pi-spinner-dotted"></i>
             </button>
-            <button v-else class="loginbtn">login
+            <button v-else class="loginbtn">Login
             </button>
           </div>
           <div class="Signinwithdiv">
@@ -100,7 +121,7 @@ const onSubmit = handleSubmit(values => {
           </div>
           <div class="socialicons">
             <div class="piDiv">
-            <i class="pi pi-facebook"></i>
+              <i class="pi pi-facebook"></i>
             </div>
             <div class="piDiv">
               <i class="pi pi-twitter"></i>
@@ -112,12 +133,12 @@ const onSubmit = handleSubmit(values => {
         </form>
         <div class="Registerdiv">
           <p class="Registercontent">
-            Don't have an account ? <RouterLink to="/signup">Sign Up</RouterLink>
+            Don't have an account ? <RouterLink to="/signup" class="signup">Sign Up</RouterLink>
           </p>
         </div>
       </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -129,7 +150,8 @@ const onSubmit = handleSubmit(values => {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #777;
+  background-color: #201d22;
+  color: white;
 }
 
 
@@ -138,19 +160,19 @@ const onSubmit = handleSubmit(values => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 55vw; 
+  width: 55vw;
   padding: 20px;
-  background-color: #888;
+  background-color: #2c282e;
   border-radius: 10px;
   padding: 30px;
 }
 
 .logindiv {
   width: 35vw;
-    padding: 30px;
-    background-color: #888;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #2c282e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -158,15 +180,15 @@ const onSubmit = handleSubmit(values => {
   text-align: center;
 }
 
-.heading  h3{
+.heading h3 {
   font-size: 29px;
   margin: 0 0 10px 0;
 }
 
 .heading p {
-  
+
   font-size: 20px;
-  margin:  20px 0;
+  margin: 20px 0;
 }
 
 .usernamediv,
@@ -177,12 +199,13 @@ const onSubmit = handleSubmit(values => {
   display: flex;
   flex-direction: column;
 }
-.userpassworddiv{
-padding-bottom: 10px;
+
+.userpassworddiv {
+  padding-bottom: 10px;
 }
 
 .usernametext,
-.userpasswordtext{
+.userpasswordtext {
   padding-bottom: 10px;
 }
 
@@ -190,15 +213,17 @@ padding-bottom: 10px;
 .userpasswordinputbox {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
+  background-color: #201d22;
+  color: #fff
 }
 
-.errormsg{
-  color: darkred;
-   margin: 7px 0px 5px 5px;
-} 
+.errormsg {
+  color: #bf3030;
+  margin: 7px 0px 5px 5px;
+}
 
 .Remembercheckbox {
   margin-right: 10px;
@@ -207,22 +232,23 @@ padding-bottom: 10px;
 .loginbtn {
   width: 100%;
   padding: 9px;
-  background-color: #007bff;
+  background-color: #6838cf;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.btnspinner{
+.btnspinner {
   padding: 5px;
 }
 
 .pi-spin {
   font-size: 16px;
-    padding: 5px;
-    color: white;
+  padding: 5px;
+  color: white;
 }
+
 .Signinwithdiv {
   display: flex;
   align-items: center;
@@ -239,19 +265,19 @@ padding-bottom: 10px;
 
 .signinwithtext {
   margin: 0 10px;
-    text-transform: uppercase;
-    font-size: 14px;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.piDiv{
+.piDiv {
   width: 5vw;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 4px;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #898e8e;
+  background-color: #2c282e;
   padding-top: 7px;
 
 }
@@ -262,20 +288,19 @@ padding-bottom: 10px;
   padding-top: 7px;
 }
 
-.Registerdiv{
+.Registerdiv {
   text-align: center;
 }
-.Registercontent{
+
+.Registercontent {
   text-align: center;
   font-size: 16px;
-    padding-top: 15px;
-    color: black
-}
-
-/* Media Query for responsiveness */
-@media (max-width: 768px) {
-
-
+  padding-top: 15px; 
  
 }
+.signup {
+  color: #6838cf;
+}
+/* Media Query for responsiveness */
+@media (max-width: 768px) {}
 </style>

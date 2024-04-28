@@ -1,4 +1,8 @@
+
 import {defineStore} from 'pinia'
+
+const token = localStorage.getItem('accessToken')
+// console.log('from login store',token)
 
 export const useloginStore = defineStore("Login",{
   state: () => ({
@@ -6,7 +10,7 @@ export const useloginStore = defineStore("Login",{
       username: '',
       password: ''
     },
-    Authenticate: false,
+    Authenticate: token,
     isloading: false,
   }),
   getters: {},
@@ -14,7 +18,6 @@ export const useloginStore = defineStore("Login",{
   updateDetails(value){
     this.userDetails.username = value.username
     this.userDetails.password = value.password
-    
   }
  }
 })

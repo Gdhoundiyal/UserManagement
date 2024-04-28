@@ -1,4 +1,19 @@
 <script setup>
+import { useRouter } from 'vue-router';
+import { useloginStore } from '@/stores/login';
+import { storeToRefs } from 'pinia';
+
+const store = useloginStore()
+const { Authenticate } = storeToRefs(store)
+console.log('Authenticate', Authenticate)
+
+const route = useRouter()
+
+const logout = () => {
+    localStorage.clear();
+    route.push('/')
+    console.log("logout",  Authenticate.value)
+}
 </script>
 
 <template>
@@ -7,16 +22,18 @@
             <!-- <i class="pi pi-align-justify"></i> -->
             <p>Section Name</p>
         </div>
+
         <div>
-            <div class="imagediv">
-                <img src="../../../../assets/adamzempa.jpg" alt="an image of a boy" height="45px" width="45px" class="image"/>
+            <div class="imagediv" @click="logout">
+                <img src="../../../../assets/adamzempa.jpg" alt="an image of a boy" height="45px" width="45px"
+                    class="image" />
             </div>
         </div>
     </div>
 </template>
 
 <style>
-.Navcont{
+.Navcont {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,16 +44,17 @@
     border-radius: 5px;
 }
 
-.sectionName{
+.sectionName {
     padding: 10px;
     display: flex;
     align-items: center;
 }
-.sectionName p{
-   font-size: 20px
+
+.sectionName p {
+    font-size: 20px
 }
 
-.imagediv{
+.imagediv {
     padding: 10px;
     height: 8vh;
     width: 8vw;
@@ -45,7 +63,7 @@
     align-items: center;
 }
 
-.image{
+.image {
     border-radius: 5px;
 }
 </style>

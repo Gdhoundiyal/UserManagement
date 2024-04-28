@@ -1,79 +1,88 @@
 <script setup>
 
-// import { ref } from 'vue';
+import { useProfileStore } from '@/stores/profile';
+import { storeToRefs } from 'pinia';
 
+const store = useProfileStore()
+const {userdetails,updateUserdetails} = storeToRefs(store)
 
-// // Data from Parent Component //
-// const props = defineProps(['name']);
-// console.log(props.name)
-// const name = ref(props.name);
-// console.log(name)
-const userDetails = [
-    { name: "Andrew" },
-    { name: "Emma" },
-    { name: "James" },
-    { name: "Olivia" },
-    { name: "William" },
-    { name: "Sophia" },
-    { name: "Michael" },
-    { name: "Isabella" },
-    { name: "John" },
-    { name: "Amelia" },
-    { name: "Robert" },
-    { name: "Charlotte" },
-    { name: "David" },
-    { name: "Mia" },
-    { name: "Joseph" },
-    { name: "Abigail" },
-    { name: "Daniel" },
-    { name: "Emily" },
-    { name: "Matthew" },
-    { name: "Harper" }
+console.log("valuessssss",updateUserdetails,userdetails)
+
+const userDetailsWithImage = [
+    { name: "Andrew", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Emma", imageUrl: "https://picsum.photos/200/300" },
+    { name: "James", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Olivia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "William", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Sophia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Michael", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Isabella", imageUrl: "https://picsum.photos/200/300" },
+    { name: "John", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Amelia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Robert", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Charlotte", imageUrl: "https://picsum.photos/200/300" },
+    { name: "David", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Mia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Joseph", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Abigail", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Daniel", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Emily", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Matthew", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Harper", imageUrl: "https://picsum.photos/200/300" }
 ];
+
+function sendData(event) {
+    console.log(event.currentTarget.getAttribute('name'))
+    store.updateUserdetails({name: event.currentTarget.getAttribute('name') ,photoId: "kjhakjhsu98123hj345"})
+}
 
 </script>
 
 <template>
-    <div v-for="(user, index) in userDetails" :key="index"  >
-        <div >
-        <div class="feedCont">
-            <div class="user-feed">
-                <div class="User-container">
-                    <div class="User-box">
-                        <div class="img-div">
-                            <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
-                                width="34px" class="image">
-                            <div class="Status"></div>
+    <div v-for="(user, index) in userDetailsWithImage" :key="index">
+        <div>
+            <div class="feedCont">
+                <div class="user-feed">
+                    <div class="User-container">
+                        <div class="User-box">
+                            <div class="img-div">
+                                <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
+                                    width="34px" class="image">
+                                <div class="Status"></div>
+                            </div>
+                           
                         </div>
+                        <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" >
+                            <p>{{ user.name }}</p>
+                        </router-link>
                     </div>
-                    <p>{{ user.name }}</p>
+                    <div class="useroption">
+                        <i class="pi pi-ellipsis-v option"></i>
+                    </div>
                 </div>
-                <div class="useroption">
-                    <i class="pi pi-ellipsis-v option"></i>
+                <div class="media-cont">
+
+                    <div class="media-box">
+                        <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/>
+                    </div>
                 </div>
-            </div>
-            <div class="media-cont">
-                <div class="media-box"></div>
-            </div>
-            <div class="icon-box">
-                <div class="piDiv">
-                    <i class="pi pi-heart iconstyle"></i>
-                </div>
-                <div class="piDiv">
-                    <i class="pi pi-comment iconstyle"></i>
-                </div>
-                <div class="piDiv">
-                    <i class="pi pi-share-alt iconstyle"></i>
+                <div class="icon-box">
+                    <div class="piDiv">
+                        <i class="pi pi-heart iconstyle"></i>
+                    </div>
+                    <div class="piDiv">
+                        <i class="pi pi-comment iconstyle"></i>
+                    </div>
+                    <div class="piDiv">
+                        <i class="pi pi-share-alt iconstyle"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    
+
 </template>
 <style>
-
-
 .container {
     display: flex;
     flex-direction: column;
@@ -149,6 +158,12 @@ const userDetails = [
     width: 90%;
     margin: 10px 0;
     border: 1px solid #898e8e;
+    border-radius: 5px;
+}
+
+.mediaImage{
+    height: 22rem;
+    width: 100%;
     border-radius: 5px;
 }
 

@@ -2,57 +2,89 @@
 import { storeToRefs } from "pinia";
 import { useSignupStore } from "@/stores/signup";
 import router from "@/router";
-import * as yup from 'yup'
+import * as yup from "yup";
 import { useForm } from "vee-validate";
+import axios from "axios";
+import { BASE_URL } from "@/assets/assets";
 
-//Store 
+//Store
 const store = useSignupStore();
 const { isloading } = storeToRefs(store);
 
 // Validation //
 const schema = yup.object({
-  username: yup.string()
-    .required('Username is required'),
-  email: yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
-  password: yup.string()
-    .required('Password is required')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
-  phone_number: yup.string()
-    .required('Phone number is required')
-    .matches(/^[0-9]+$/, 'Phone number contain only digits')
-    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits')
+  username: yup.string().required("Username is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    ),
+  phone_number: yup
+    .string()
+    .required("Phone number is required")
+    .matches(/^[0-9]+$/, "Phone number contain only digits")
+    .matches(/^\d{10}$/, "Phone number must be exactly 10 digits"),
 });
 
 const { defineField, errors, handleSubmit } = useForm({
-  validationSchema: schema
-})
+  validationSchema: schema,
+});
 
-const [username, usernameAttrs] = defineField('username');
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
-const [phone_number, phone_numberAttrs] = defineField('phone_number')
-
+const [username, usernameAttrs] = defineField("username");
+const [email, emailAttrs] = defineField("email");
+const [password, passwordAttrs] = defineField("password");
+const [phone_number, phone_numberAttrs] = defineField("phone_number");
+// localStorage.setItem("name" = "girish")
 
 // Functions //
-const onSubmit = handleSubmit(vlaues => {
-  console.log(vlaues)
+const onSubmit = handleSubmit((vlaues) => {
+  console.log(vlaues);
 
-  store.updateSignupDetails(vlaues)
+
+  store.updateSignupDetails(vlaues);
   store.$patch((state) => {
-    state.isloading = true
-  })
+    state.isloading = true;
+  });
+
+  axios
+    .post(`${BASE_URL}register`, {
+      username: vlaues.username,
+      email: vlaues.email,
+      password: vlaues.password,
+      phone_number: vlaues.phone_number,
+    })
+    .then(
+      (response) => {
+        console.log(response);
+        store.$patch((state) => {
+          state.isloading = false;
+          alert("user sign up Successfully");
+          router.push("/");
+        });
+      },
+      (error) => {
+        store.$patch((state) => {
+          state.isloading = false;
+        });
+        console.log(error);
+      }
+    );
 
   setTimeout(() => {
     store.$patch((state) => {
-      state.isloading = false
-      alert("user sign up Successfully")
-      router.push("/")
-    })
+      state.isloading = false;
+      alert("user sign up Successfully");
+      router.push("/");
+    });
   }, 4000);
-})
+});
 </script>
 
 <template>
@@ -95,8 +127,7 @@ const onSubmit = handleSubmit(vlaues => {
             <button v-if="isloading" class="loginbtn btnspinner">
               <i class="pi pi-spin pi-spinner-dotted"></i>
             </button>
-            <button v-else class="loginbtn">Register
-            </button>
+            <button v-else class="loginbtn">Register</button>
           </div>
           <div class="Signinwithdiv">
             <div class="leftLine"></div>
@@ -117,7 +148,7 @@ const onSubmit = handleSubmit(vlaues => {
         </form>
         <div class="Registerdiv">
           <p class="Registercontent">
-            Already have an account ? <RouterLink to="/">Login</RouterLink>
+            Already have an account ? <RouterLink to="/" class="signup">Login</RouterLink>
           </p>
         </div>
       </div>
@@ -130,11 +161,11 @@ const onSubmit = handleSubmit(vlaues => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   width: 100vw;
-  background-color: #777;
+  background-color: #201d22;
+  color: white;
+  
 }
-
 
 /* Right container */
 .Right-cont {
@@ -142,19 +173,19 @@ const onSubmit = handleSubmit(vlaues => {
   justify-content: center;
   align-items: center;
   width: 55vw;
-  padding: 20px;
-  background-color: #888;
+  margin: 20px;
+  background-color: #2c282e;
   border-radius: 10px;
-  padding: 30px;
+  scrollbar-width: none;
 }
 
 .logindiv {
   width: 35vw;
-  padding: 30px;
-  background-color: #888;
+  padding: 20px 30px;
+  background-color: #2c282e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+ 
 }
 
 .heading {
@@ -199,23 +230,23 @@ const onSubmit = handleSubmit(vlaues => {
 .useremailinputbox,
 .userpasswordinputbox {
   width: 100%;
-  padding: 7px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
+  background-color: #201d22;
+  color: #fff
 }
-
 
 .errormsg {
-  color: darkred;
+  color: #bf3030;
   margin: 7px 0px 5px 5px;
 }
-
 
 .loginbtn {
   width: 100%;
   padding: 9px;
-  background-color: #007bff;
+  background-color: #6838cf;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -254,15 +285,13 @@ const onSubmit = handleSubmit(vlaues => {
 
 .piDiv {
   width: 5vw;
-  border: 1px solid black;
   border-radius: 4px;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #898e8e;
+  background-color: #2c282e;;
   padding-top: 7px;
-
 }
 
 .socialicons {
@@ -279,10 +308,12 @@ const onSubmit = handleSubmit(vlaues => {
   text-align: center;
   font-size: 16px;
   padding-top: 15px;
-  color: black;
   margin: 5px 0;
 }
 
+.signup {
+  color: #6838cf;
+}
 /* Media Query for responsiveness */
 @media (max-width: 768px) {}
 </style>
