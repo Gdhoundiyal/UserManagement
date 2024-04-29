@@ -1,5 +1,5 @@
 <script setup>
-
+import { ref } from 'vue';
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
 
@@ -17,18 +17,19 @@ const userDetails = [
     { name: "Sophia" },
 ];
 
-const Editprofile = () => {
-    console.log('editProfile')
-}
+
+
+const open = ref(false)
 
 </script>
 
 <template>
+
     <div class="container">
         <div class="profilecontainer">
             <div class="profile">
                 <div class="imagediv">
-                    <img class="profileimg" src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="170px" width="170px">
+                    <img class="profileimg" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="170px" width="170px">
                 </div>
                 <div class="following-post-div">
                     <div class="post-div">
@@ -54,8 +55,17 @@ const Editprofile = () => {
                     illum esse non quaerat minima nam.</p>
             </div>
             <div class="Editdiv">
-                <p class="Editbtn" @click="Editprofile">Edit Profile</p>
+                <p class="Editbtn"  @click="open = true">Edit Profile</p>
             </div>
+          
+
+        <div v-if="open" class="modalbg">
+        <div  class="modal">
+        <p>Hello from the modal!</p>
+        <button @click="open = false">Close</button>
+        </div>
+        </div>
+                    
             
             <div v-for="(user, index) in userDetails" :key="index">
                 <div>
@@ -283,5 +293,23 @@ const Editprofile = () => {
     margin-top: 10px;
 }
 
+.modalbg{
+    position: absolute;
+    z-index: 999;
+    top: 0%;
+    left: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0,0,0,0.5);
+    height: 100vh;
+    width: 100vw;
+}
+
+.modal{
+    position: relative;
+    background: #fff;
+    box-shadow: 0px, 10px, 5px, 2px rgb(0,0,0,0.1);
+}
  
 </style>

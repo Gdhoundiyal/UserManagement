@@ -30,7 +30,11 @@ const logout = () => {
     route.push('/')
     console.log("logout",  Authenticate.value)
 }
-
+const outside = () => {
+    store.$patch((state)=>{
+        state.logoutbtn = false
+    })
+}
 </script>
 
 <template>
@@ -39,14 +43,14 @@ const logout = () => {
             <!-- <i class="pi pi-align-justify"></i> -->
             <p>{{sectionName}}</p>
         </div>
-
+        
         <div>
             <div class="imagediv" @click="logoutOn">
-                <img src="../../../../assets/adamzempa.jpg" alt="an image of a boy" height="45px" width="45px"
+                <img src="../../../../assets/userImg.jpg" alt="an image of a boy" height="45px" width="45px"
                     class="image" />
                 <div>
                 <div v-if="logoutbtn" class="logoutdiv">
-                   <p @click="logout" class="logoutbtn">LogOut</p>
+                   <p @click="logout" v-click-outside="outside" class="logoutbtn">LogOut</p>
                 </div>
                 </div>
             </div>

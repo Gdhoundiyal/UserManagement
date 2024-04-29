@@ -3,14 +3,16 @@
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
-import userpost from './user-post.vue'
+import { object, string } from 'yup';
 
 const store = useProfileStore()
-const {editOpen } = storeToRefs(store)
+const {editOpen, userdetails } = storeToRefs(store)
 
-// console.log("valuessssss",updateUserdetails,userdetails)
+
 
 let openmod = ref(false)
+// console.log("valuessssss",updateUserdetails,userdetails)
+
 const userDetailsWithImage = [
     { name: "Andrew", imageUrl: "https://picsum.photos/200/300" },
     { name: "Emma", imageUrl: "https://picsum.photos/200/300" },
@@ -30,23 +32,29 @@ function sendData(event) {
     store.updateUserdetails({name: event.currentTarget.getAttribute('name') ,photoId: "kjhakjhsu98123hj345"})
 }
 
-// function openEdit(){
-// //     console.log("clicked")
-// //    store.updateEditOpen(true)
-// openmod.value = true
-// }
+function openEdit(){
+    console.log("clicked openEdit")
+//    store.updateEditOpen(true)
+openmod.value = true;
+}
 
-// const outside = () => {
-//     openmod.value = false
-// }
+const outside = () => {
+    console.log("clicked outside")
+    openmod.value = false
+}
+const props = defineProps({
+    user: object
+}
+)
+
+const {...user} = props
+console.log(user)
+// console.log(props.user)
 
 </script>
 
 <template>
-
-    <userpost v-for="(user, index) in userDetailsWithImage" :key="index" :user="user"/>
-    <!-- <div v-for="(user, index) in userDetailsWithImage" :key="index">
-        {{ index }}
+ 
         <div>
             <div class="feedCont">
                 <div class="user-feed">
@@ -58,9 +66,10 @@ function sendData(event) {
                                 <div class="Status"></div>
                             </div>
                         </div>
-                        <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" >
+                        <!-- <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" >
                             <p>{{ user.name }}</p>
-                        </router-link>
+                        </router-link> -->
+                        <!-- <p>{{ userdetails.name ? userdetails.name : <p>helo</p> }}</p> -->
                     </div>
                     <div class="useroption">
                         <i class="pi pi-ellipsis-v option" @click="openEdit"></i>
@@ -73,7 +82,7 @@ function sendData(event) {
                 <div class="media-cont">
 
                     <div class="media-box">
-                        <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/>
+                        <!-- <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/> -->
                     </div>
                 </div>
                 <div class="icon-box">
@@ -89,7 +98,7 @@ function sendData(event) {
                 </div>
             </div>
         </div>
-    </div> -->
+    <!-- </div> -->
 
 </template>
 <style>
