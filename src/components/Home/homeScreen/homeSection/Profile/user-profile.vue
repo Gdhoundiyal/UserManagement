@@ -1,11 +1,10 @@
 <script setup>
 
-// import CustomModal from '../../../../generalcomponents/modal.vue'
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
 
 const store = useProfileStore()
-const {showModal} = storeToRefs(store)
+let {showModal} = storeToRefs(store)
 console.log(showModal)
 
 
@@ -17,14 +16,9 @@ const userDetails = [
     { name: "William" },
     { name: "Sophia" },
 ];
-// let showModal = false;
 
-function openModal() {
-    console.log("opening")
-    showModal = true;
-};
-function closeModal() {
-    showModal = false;
+const Editprofile = () => {
+    console.log('editProfile')
 }
 
 </script>
@@ -34,6 +28,7 @@ function closeModal() {
         <div class="profilecontainer">
             <div class="profile">
                 <div class="imagediv">
+                    <img class="profileimg" src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="170px" width="170px">
                 </div>
                 <div class="following-post-div">
                     <div class="post-div">
@@ -59,16 +54,10 @@ function closeModal() {
                     illum esse non quaerat minima nam.</p>
             </div>
             <div class="Editdiv">
-                <p>Edit Profile</p>
+                <p class="Editbtn" @click="Editprofile">Edit Profile</p>
             </div>
-            <!-- <div>
-                <b-button v-b-modal.modal-1>Launch demo modal</b-button>
-
-                <b-modal id="modal-1" title="BootstrapVue">
-                    <p class="my-4">Hello from modal!</p>
-                </b-modal>
-            </div> -->
-            <!-- <div v-for="(user, index) in userDetails" :key="index">
+            
+            <div v-for="(user, index) in userDetails" :key="index">
                 <div>
                     <div class="feedCont">
                         <div class="user-feed">
@@ -102,16 +91,8 @@ function closeModal() {
                         </div>
                     </div>
                 </div>
-            </div> -->
-            <div>
-                <div>
-                    <button @click="openModal">Open Modal</button>
-                    <p  v-if="showModal">Modal Content Goes Here</p>
-                    <!-- <CustomModal v-if="showModal" @close="closeModal">
-                        <button @click="closeModal">Close</button>
-                    </CustomModal> -->
-                </div>
             </div>
+            
         </div>
     </div>
 </template>
@@ -139,6 +120,9 @@ function closeModal() {
 
 }
 
+.profileimg{
+    border-radius: 50%;
+}
 .following-post-div {
     display: flex;
     justify-content: space-between;
@@ -156,6 +140,7 @@ function closeModal() {
     border-radius: 50%;
     margin-bottom: 20px;
     border: 1px solid white;
+    background-color: #888;
 }
 
 .post-div,
@@ -196,6 +181,15 @@ function closeModal() {
 
 .Editdiv p {
     font-size: 15px
+}
+.Editbtn {
+ 
+  padding: 9px;
+  background-color: #6838cf;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* post section */

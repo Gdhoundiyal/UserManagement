@@ -1,9 +1,12 @@
 <script setup>
+import { useNavstore } from '@/stores/nav';
+
+const navStore = useNavstore()
+
 
 const changeScreen = (event) =>{
   const name = event.currentTarget.getAttribute('name');
-
-
+  navStore.updatesectionName(name)
 }
 
 </script>
