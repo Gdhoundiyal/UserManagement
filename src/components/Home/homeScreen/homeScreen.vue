@@ -36,12 +36,11 @@ console.log("mainUserDetails",mainUserDetails.value)
         <Navscreen />
         <div class="userfeedcontainer" >
             <router-view/>
-           
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 .navcontainer{
     padding: 7px
 }

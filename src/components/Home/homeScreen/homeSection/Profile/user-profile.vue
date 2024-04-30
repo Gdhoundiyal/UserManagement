@@ -2,20 +2,16 @@
 import { ref } from 'vue';
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
+import userPost from '../feed/user-post.vue';
 
 const store = useProfileStore()
 let {showModal} = storeToRefs(store)
 console.log(showModal)
 
 
-const userDetails = [
-    { name: "Andrew" },
-    { name: "Emma" },
-    { name: "James" },
-    { name: "Olivia" },
-    { name: "William" },
-    { name: "Sophia" },
-];
+const user = { name: "SHoleyky" };
+ 
+
 
 
 
@@ -29,7 +25,7 @@ const open = ref(false)
         <div class="profilecontainer">
             <div class="profile">
                 <div class="imagediv">
-                    <img class="profileimg" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="170px" width="170px">
+                    <img class="profileimg" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="150px" width="150px">
                 </div>
                 <div class="following-post-div">
                     <div class="post-div">
@@ -55,54 +51,11 @@ const open = ref(false)
                     illum esse non quaerat minima nam.</p>
             </div>
             <div class="Editdiv">
+                
                 <p class="Editbtn"  @click="open = true">Edit Profile</p>
             </div>
-          
 
-        <div v-if="open" class="modalbg">
-        <div  class="modal">
-        <p>Hello from the modal!</p>
-        <button @click="open = false">Close</button>
-        </div>
-        </div>
-                    
-            
-            <div v-for="(user, index) in userDetails" :key="index">
-                <div>
-                    <div class="feedCont">
-                        <div class="user-feed">
-                            <div class="User-container">
-                                <div class="User-box">
-                                    <div class="img-div">
-                                        <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man"
-                                            height="34px" width="34px" class="image">
-                                        <div class="Status"></div>
-                                    </div>
-                                </div>
-                                <p>{{ user.name }}</p>
-                            </div>
-                            <div class="useroption">
-                                <i class="pi pi-ellipsis-v option"></i>
-                            </div>
-                        </div>
-                        <div class="media-cont">
-                            <div class="media-box"></div>
-                        </div>
-                        <div class="icon-box">
-                            <div class="piDiv">
-                                <i class="pi pi-heart iconstyle"></i>
-                            </div>
-                            <div class="piDiv">
-                                <i class="pi pi-comment iconstyle"></i>
-                            </div>
-                            <div class="piDiv">
-                                <i class="pi pi-share-alt iconstyle"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+          <userPost :user="user"/>
         </div>
     </div>
 </template>
@@ -123,7 +76,7 @@ const open = ref(false)
 
 .profile {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     padding: 20px;
     border: 1px solid #888;

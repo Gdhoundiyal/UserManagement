@@ -43,56 +43,9 @@ function sendData(event) {
 </script>
 
 <template>
-
     <userpost v-for="(user, index) in userDetailsWithImage" :key="index" :user="user"/>
-    <!-- <div v-for="(user, index) in userDetailsWithImage" :key="index">
-        {{ index }}
-        <div>
-            <div class="feedCont">
-                <div class="user-feed">
-                    <div class="User-container">
-                        <div class="User-box">
-                            <div class="img-div">
-                                <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
-                                    width="34px" class="image">
-                                <div class="Status"></div>
-                            </div>
-                        </div>
-                        <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" >
-                            <p>{{ user.name }}</p>
-                        </router-link>
-                    </div>
-                    <div class="useroption">
-                        <i class="pi pi-ellipsis-v option" @click="openEdit"></i>
-                        <div v-if="openmod" class="logoutdiv" v-click-outside="outside">
-                   <p @click="logout" class="logoutbtn">LogOut</p>
-                </div>
-                    </div>
-
-                </div>
-                <div class="media-cont">
-
-                    <div class="media-box">
-                        <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/>
-                    </div>
-                </div>
-                <div class="icon-box">
-                    <div class="piDiv">
-                        <i class="pi pi-heart iconstyle"></i>
-                    </div>
-                    <div class="piDiv">
-                        <i class="pi pi-comment iconstyle"></i>
-                    </div>
-                    <div class="piDiv">
-                        <i class="pi pi-share-alt iconstyle"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 </template>
-<style>
+<style scoped >
 .container {
     display: flex;
     flex-direction: column;
