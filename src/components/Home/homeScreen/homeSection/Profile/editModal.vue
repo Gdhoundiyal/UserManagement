@@ -1,42 +1,65 @@
 <script setup>
-import { ref } from 'vue';
-import { useProfileStore } from '@/stores/profile';
-import { storeToRefs } from 'pinia';
-import axios from 'axios';
-import { BASE_URL } from '@/assets/assets';
+import { ref } from "vue";
+import { useProfileStore } from "@/stores/profile";
+import { storeToRefs } from "pinia";
+import axios from "axios";
+import { BASE_URL } from "@/assets/assets";
 
-const profileStore = useProfileStore()
-const {userdetails, updateUserdetails} = storeToRefs(profileStore)
+const profileStore = useProfileStore();
+const { userdetails, updateUserdetails } = storeToRefs(profileStore);
 
+console.log(userdetails,'from editmodal')
 
-const selectedPhoto = ref(null)
-const name = ref("")
-const email = ref("")
-const profile = ref("")
-const isloading = ref(false)
+const selectedPhoto = ref(null);
+const name = ref("");
+const email = ref("");
+const profile = ref("");
+const localProfile = ref("");
+const phone = ref("");
+const isloading = ref(false);
+const access_token = localStorage.getItem('accessToken');
+// console.log(access_token)
 
 const uploadImg = (event) => {
+  const selectedImg = event.target.files[0];
+  const imagePath = URL.createObjectURL(selectedImg);
+  profile.value = selectedImg;
+  localProfile.value = imagePath;
+  // console.log("selectedImg", selectedImg)
 
-const selectedImg = event.target.files[0]
-const imagePath = URL.createObjectURL(selectedImg)
-profile.value = imagePath
-// console.log(selectedImg.name, imagePath)
-
-selectedPhoto.value  = imagePath
-// console.log("selectedImg",selectedImg.name)
-
-}
+  selectedPhoto.value = imagePath;
+  // console.log("selectedImg",selectedImg.name)
+};
 
 const updateProfile = async () => {
-isloading.value = true
-// console.log(name.value, email.value, profile.value)
+  isloading.value = true;
+  // console.log(name.value, email.value, phone.value, profile.value);
 
-profileStore.updateUserdetails(name.value, email.value, profile.value);
+  profileStore.updateUserdetails(name.value, email.value,  phone.value, localProfile.value);
 
-// const response = await axios.put(`${BASE_URL}`)
-
-}
-
+  try {
+    const response = await axios.put(`${BASE_URL}profile`, {
+      username: name.value,
+      email: email.value,
+      profile: profile.value,
+      phone: phone.value,
+    }, {
+    headers: {
+      'Authorization': `Bearer ${access_token}`
+    }
+  });
+    // console.log(response.data);
+    if(response?.data?.message){
+      alert(response.data.detail)
+    }
+  } catch (error) {
+    error = error.message;
+    alert(error.message)
+    localStorage.clear();
+  } finally {
+    isloading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -44,9 +67,17 @@ profileStore.updateUserdetails(name.value, email.value, profile.value);
     <div class="Container">
       <div class="imagediv">
         <div>
-          <img v-if="selectedPhoto" :src="selectedPhoto" alt="an image of user" height="154px" width="155px"  class="profileimg"/>
+          <img
+            v-if="selectedPhoto"
+            :src="selectedPhoto"
+            alt="an image of user"
+            height="154px"
+            width="155px"
+            class="profileimg"
+          />
 
-          <img v-else
+          <img
+            v-else
             class="profileimg"
             @click="imgViewModal"
             src="../../../../../assets/userImg.jpg"
@@ -55,7 +86,7 @@ profileStore.updateUserdetails(name.value, email.value, profile.value);
             width="150px"
           />
         </div>
-        <label class="btn "
+        <label class="btn"
           >Upload profile
           <input
             type="file"
@@ -65,24 +96,40 @@ profileStore.updateUserdetails(name.value, email.value, profile.value);
             style="display: none"
         /></label>
       </div>
-    
       <div class="inputSection">
         <div class="inputbox">
           <div class="inputname">Name :</div>
-          <input class="input" type="text" placeholder="Joaseph" v-model="name" />
+          <input
+            class="input"
+            type="text"
+            placeholder="Joaseph"
+            v-model="name"
+          />
         </div>
         <div class="inputbox">
           <div class="inputname">Email :</div>
-          <input class="input" type="text" placeholder="Example@123" v-model="email" />
+          <input
+            class="input"
+            type="text"
+            placeholder="Example@123"
+            v-model="email"
+          />
+        </div>
+        <div class="inputbox">
+          <div class="inputname">Phone :</div>
+          <input
+            class="input"
+            type="number"
+            placeholder="+91...."
+            v-model="phone"
+          />
         </div>
       </div>
       <div class="btnSection">
         <button v-if="isloading" class="btn btnspinner">
-              <i class="pi pi-spin pi-spinner-dotted"></i>
-            </button>
-        <button v-else class="btn update" @click="updateProfile"
-          >Update
-          </button>
+          <i class="pi pi-spin pi-spinner-dotted"></i>
+        </button>
+        <button v-else class="btn update" @click="updateProfile">Update</button>
       </div>
     </div>
   </div>
@@ -160,7 +207,7 @@ input::placeholder {
 .btnspinner {
   padding: 5px;
   width: 100%;
-  height: 33px
+  height: 33px;
 }
 .update {
   width: 100%;

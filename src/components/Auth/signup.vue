@@ -45,8 +45,6 @@ const [phone_number, phone_numberAttrs] = defineField("phone_number");
 // Functions //
 const onSubmit = handleSubmit((vlaues) => {
   console.log(vlaues);
-
-
   store.updateSignupDetails(vlaues);
   store.$patch((state) => {
     state.isloading = true;

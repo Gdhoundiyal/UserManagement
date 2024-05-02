@@ -5,17 +5,20 @@ export const useProfileStore  = defineStore('profile',{
         userdetails: {
             name: "",
             email: "",
-            profile: ""
+            profile: "",
+            phone: "",
         },
         mainUserDetails: null,
         editOpen : false
+        
     }),
     actions: {
-        updateUserdetails(name, email, profile){
-            console.log(name, email, profile)
-            // this.userdetails.name = data?.name
-            // this.userdetails.email = data?.email
-            // this.userdetails.profile = data?.profile
+        updateUserdetails(name, email, phone, profile){
+            console.log(name, email, phone, profile)
+            this.userdetails.name = name
+            this.userdetails.email = email
+            this.userdetails.phone = phone
+            this.userdetails.profile = profile
         },
         updatemainUserDetails(data){
             this.mainUserDetails = data

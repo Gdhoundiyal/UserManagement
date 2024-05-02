@@ -1,20 +1,29 @@
 <script setup>
-import { ref } from 'vue';
-import { useProfileStore } from '@/stores/profile';
+import { ref , watch} from 'vue';
 import userPost from '../feed/user-post.vue';
 import imageModal from './imageModal.vue';
 import editModal from './editModal.vue'
-import { storeToRefs } from 'pinia';
-
-const profileStore = useProfileStore()
-const {userdetails} = storeToRefs(profileStore)
-console.log("userdetails", userdetails)
+import { useProfileStore } from '@/stores/profile';
+    const profileStore = useProfileStore()
+    const name = ref(profileStore.userdetails.name);
+    const profile = ref(profileStore.userdetails.profile);
 
 const openViewImg = ref(false)
 const openEditModal = ref(false)
+const updatedImg = ref(false)
+
+const user = { name: "SHoleyky"};
 
 
-const user = { name: "SHoleyky" };
+
+watch(() => profileStore.userdetails.name, (newValue) => {
+      name.value = newValue;
+    });
+    watch(() => profileStore.userdetails.profile, (newValue) => {
+      profile.value = newValue;
+      updatedImg.value = true
+    });
+console.log(name.value, profile.value)
 
 const imgViewModal = () => {
     openViewImg.value = true
@@ -39,7 +48,9 @@ const closeEditModal = () => {
         <div class="profilecontainer">
             <div class="profile">
                 <div class="imagediv">
-                    <img class="profileimg" @click="imgViewModal" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="150px" width="150px">
+                        <img v-if="updatedImg" class="profileimg" @click="imgViewModal" :src="profile" alt="An Image of a Man" height="150px" width="150px">
+                        <img v-else class="profileimg" @click="imgViewModal" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="150px" width="150px">
+
                     <div v-if="openViewImg" class="modalContainer">
                         <imageModal v-click-outside="closeImgModal" imagePath="image123.jpg"/>
                     </div>
@@ -60,7 +71,8 @@ const closeEditModal = () => {
                 </div>
             </div>
             <div class="biodiv">
-                <p>Aderson Mathew</p>
+                <p v-if="updatedImg">{{ name }}</p>
+                <p v-else>Aderson Mathew</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     t
                     illum esse non quaerat minima nam.</p>

@@ -3,14 +3,28 @@ import { useRouter } from 'vue-router';
 import { useloginStore } from '@/stores/login';
 import { storeToRefs } from 'pinia';
 import { useNavstore } from '@/stores/nav';
-
+import { useProfileStore } from '@/stores/profile';
+import { ref, watch } from 'vue';
 
 const store = useloginStore()
 const { Authenticate, logoutbtn } = storeToRefs(store)
 
 // Nav Store //
 const navStore = useNavstore()
-let {sectionName} = storeToRefs(navStore)
+let {sectionName } = storeToRefs(navStore)
+
+
+// Profile Store //
+const updatedImg = ref(false)
+const profileStore = useProfileStore()
+const profile = ref(profileStore.userdetails.profile);
+
+
+
+watch(() => profileStore.userdetails.profile, (newValue) => {
+      profile.value = newValue;
+      updatedImg.value = true
+    });
 
 const route = useRouter()
 
@@ -45,7 +59,9 @@ const outside = () => {
         
         <div>
             <div class="imagediv" @click="logoutOn">
-                <img src="../../../../assets/userImg.jpg" alt="an image of a boy" height="45px" width="45px"
+                <img v-if="updatedImg" :src="profile" alt="an image of a boy" height="45px" width="45px"
+                    class="image" />
+                <img v-else src="../../../../assets/userImg.jpg" alt="an image of a boy" height="45px" width="45px"
                     class="image" />
                 <div>
                 <div v-if="logoutbtn" class="logoutdiv">
