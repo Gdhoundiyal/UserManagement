@@ -28,18 +28,18 @@ const userDetailsWithImage = [
 ];
 
 function sendData(event) {
-    console.log(event.currentTarget.getAttribute('name'))
+    // console.log(event.currentTarget.getAttribute('name'))
     store.updateUserdetails({ name: event.currentTarget.getAttribute('name'), photoId: "kjhakjhsu98123hj345" })
 }
 
 function openEdit() {
-    console.log("clicked openEdit")
+    // console.log("clicked openEdit")
     //    store.updateEditOpen(true)
     openmod.value = true;
 }
 
 const outside = () => {
-    console.log("clicked outside")
+    // console.log("clicked outside")
     openmod.value = false
 }
 const props = defineProps({
@@ -48,7 +48,7 @@ const props = defineProps({
 )
 
 
-console.log(props.user)
+// console.log(props.user)
 // console.log(props.user)
 
 </script>
@@ -63,7 +63,7 @@ console.log(props.user)
                         <div class="img-div">
                             <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
                                 width="34px" class="image">
-                            <div class="Status"></div>
+                           
                         </div>
                     </div>
                     <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" class="UserName">
@@ -165,15 +165,7 @@ console.log(props.user)
     border-radius: 50%;
 }
 
-.Status {
-    height: 7px;
-    width: 7px;
-    background-color: green;
-    border-radius: 50%;
-    position: relative;
-    top: 25px;
-    right: 7px;
-}
+
 
 .media-cont {
     display: flex;

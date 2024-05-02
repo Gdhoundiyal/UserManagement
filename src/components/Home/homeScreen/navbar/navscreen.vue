@@ -7,7 +7,6 @@ import { useNavstore } from '@/stores/nav';
 
 const store = useloginStore()
 const { Authenticate, logoutbtn } = storeToRefs(store)
-console.log('Authenticate', Authenticate)
 
 // Nav Store //
 const navStore = useNavstore()
@@ -98,12 +97,13 @@ const outside = () => {
 
 .logoutdiv{
     position: absolute;
+    right: 24px;
 }
 .logoutbtn{
     position: relative;
     top: 10px;
     text-align: center;
-    right: 31px;
+    right: 0;
     font-size: 14px;
     width: 4rem;
     padding: 4px;

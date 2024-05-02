@@ -1,21 +1,35 @@
 <script setup>
 import { ref } from 'vue';
 import { useProfileStore } from '@/stores/profile';
-import { storeToRefs } from 'pinia';
 import userPost from '../feed/user-post.vue';
+import imageModal from './imageModal.vue';
+import editModal from './editModal.vue'
+import { storeToRefs } from 'pinia';
 
-const store = useProfileStore()
-let {showModal} = storeToRefs(store)
-console.log(showModal)
+const profileStore = useProfileStore()
+const {userdetails} = storeToRefs(profileStore)
+console.log("userdetails", userdetails)
+
+const openViewImg = ref(false)
+const openEditModal = ref(false)
 
 
 const user = { name: "SHoleyky" };
- 
 
+const imgViewModal = () => {
+    openViewImg.value = true
+}
 
+const closeImgModal = () => {
+    openViewImg.value = false
+}
 
-
-const open = ref(false)
+const openEdit = () => {
+    openEditModal.value = true
+}
+const closeEditModal = () => {
+    openEditModal.value = false
+}
 
 </script>
 
@@ -25,7 +39,10 @@ const open = ref(false)
         <div class="profilecontainer">
             <div class="profile">
                 <div class="imagediv">
-                    <img class="profileimg" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="150px" width="150px">
+                    <img class="profileimg" @click="imgViewModal" src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="150px" width="150px">
+                    <div v-if="openViewImg" class="modalContainer">
+                        <imageModal v-click-outside="closeImgModal" imagePath="image123.jpg"/>
+                    </div>
                 </div>
                 <div class="following-post-div">
                     <div class="post-div">
@@ -51,10 +68,11 @@ const open = ref(false)
                     illum esse non quaerat minima nam.</p>
             </div>
             <div class="Editdiv">
-                
-                <p class="Editbtn"  @click="open = true">Edit Profile</p>
+                <p class="Editbtn"  @click="openEdit">Edit Profile</p>
+                <div v-if="openEditModal" class="modalContainer">
+                    <editModal v-click-outside="closeEditModal"/>
+                </div>
             </div>
-
           <userPost :user="user"/>
         </div>
     </div>
@@ -66,7 +84,18 @@ const open = ref(false)
     height: auto;
     /* border: 1px solid white */
 }
-
+.modalContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.62);
+  /* z-index: 999; */
+}
 .profilecontainer {
     width: 53vw;
     padding: 20px;
@@ -86,6 +115,7 @@ const open = ref(false)
 .profileimg{
     border-radius: 50%;
 }
+
 .following-post-div {
     display: flex;
     justify-content: space-between;

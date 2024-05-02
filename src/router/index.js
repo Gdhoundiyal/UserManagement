@@ -36,7 +36,7 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "Home",
+          name: "feed",
           component: userfeed,
         },
         {

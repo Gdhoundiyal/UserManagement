@@ -13,7 +13,6 @@ store.$patch((state)=>{
 state.Authenticate = access_token
 })
 
-
 </script>
 
 <template>

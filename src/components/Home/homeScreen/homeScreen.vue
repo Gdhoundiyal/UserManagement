@@ -12,10 +12,9 @@ const profileStore = useProfileStore()
 
 const {mainUserDetails} = storeToRefs(profileStore)
 const {Authenticate} = storeToRefs(loginstore)
-console.log("mainUserDetails",mainUserDetails.value)
 
  onMounted(()=>{
-    console.log("homepage rendered")
+    // console.log("homepage rendered")
      if(mainUserDetails.value === null){
     axios.get(`${BASE_URL}profile`,{
         headers: {
@@ -24,7 +23,7 @@ console.log("mainUserDetails",mainUserDetails.value)
     }).then((response)=>{
         profileStore.updatemainUserDetails(response.data)
     }).catch((error)=>{
-        console.log(error)
+        // console.log(error)
     })
 }
 
