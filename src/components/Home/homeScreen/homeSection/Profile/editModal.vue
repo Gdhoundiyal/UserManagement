@@ -6,9 +6,9 @@ import axios from "axios";
 import { BASE_URL } from "@/assets/assets";
 
 const profileStore = useProfileStore();
-const { userdetails, updateUserdetails } = storeToRefs(profileStore);
+const { userdetails, editOpen} = storeToRefs(profileStore);
 
-console.log(userdetails,'from editmodal')
+console.log(userdetails,'from editmodal', editOpen.value)
 
 const selectedPhoto = ref(null);
 const name = ref("");
@@ -18,22 +18,17 @@ const localProfile = ref("");
 const phone = ref("");
 const isloading = ref(false);
 const access_token = localStorage.getItem('accessToken');
-// console.log(access_token)
 
 const uploadImg = (event) => {
   const selectedImg = event.target.files[0];
   const imagePath = URL.createObjectURL(selectedImg);
   profile.value = selectedImg;
   localProfile.value = imagePath;
-  // console.log("selectedImg", selectedImg)
-
   selectedPhoto.value = imagePath;
-  // console.log("selectedImg",selectedImg.name)
 };
 
 const updateProfile = async () => {
   isloading.value = true;
-  // console.log(name.value, email.value, phone.value, profile.value);
 
   profileStore.updateUserdetails(name.value, email.value,  phone.value, localProfile.value);
 
@@ -47,17 +42,20 @@ const updateProfile = async () => {
     headers: {
       'Authorization': `Bearer ${access_token}`
     }
-  });
+    });
     // console.log(response.data);
     if(response?.data?.message){
       alert(response.data.detail)
     }
+    profileStore.updateEditOpen(false)
   } catch (error) {
     error = error.message;
     alert(error.message)
     localStorage.clear();
+    profileStore.updateEditOpen(false)
   } finally {
     isloading.value = false;
+  
   }
 };
 </script>
@@ -122,6 +120,7 @@ const updateProfile = async () => {
             type="number"
             placeholder="+91...."
             v-model="phone"
+            step="0.01"
           />
         </div>
       </div>
@@ -136,6 +135,11 @@ const updateProfile = async () => {
 </template>
 
 <style scoped>
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 .modalprofileupdate {
   display: flex;
   justify-content: center;

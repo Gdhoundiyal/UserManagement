@@ -52,7 +52,7 @@ const outside = () => {
         </div>
       </RouterLink>
       <!-- <RouterLink to="/home/Create" class="routestyle"> -->
-      <div class="icon-div" name="Create" @click="changeScreen">
+      <div class="icon-div routestyle" name="Create" @click="changeScreen">
         <i class="pi pi-plus-circle" id="styles"></i>
         <p>Create</p>
       </div>
@@ -93,6 +93,10 @@ const outside = () => {
 .routestyle {
   color: #878a92;
   text-decoration: none;
+}
+.routestyle:hover {
+  background-color: #3a3b3c;
+    border-radius: 5px;
 }
 
 #icons {

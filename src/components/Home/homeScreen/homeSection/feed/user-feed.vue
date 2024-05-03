@@ -54,7 +54,6 @@ function sendData(event) {
     overflow: scroll;
     height: 88vh;
     scrollbar-width: none;
-
 }
 
 .feedCont {

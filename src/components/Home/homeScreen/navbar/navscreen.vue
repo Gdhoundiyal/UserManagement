@@ -119,7 +119,7 @@ const outside = () => {
     position: relative;
     top: 10px;
     text-align: center;
-    right: 0;
+    right: 20px;
     font-size: 14px;
     width: 4rem;
     padding: 4px;

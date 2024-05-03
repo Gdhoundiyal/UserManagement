@@ -4,7 +4,8 @@ import signup from "../components/Auth/signup.vue";
 import Homepage from "@/components/Home/Homepage.vue";
 import Profile from "@/components/Home/homeScreen/homeSection/Profile/user-profile.vue";
 import userSearch from "@/components/Home/homeScreen/homeSection/search/search.vue";
-import userMessage from "@/components/Home/homeScreen/homeSection/message/message.vue";
+import userMessageList from "@/components/Home/homeScreen/homeSection/message/message.vue";
+import userMessage from "@/components/Home/homeScreen/homeSection/message/chatscreen/chat-body.vue";
 import userNotification from "@/components/Home/homeScreen/homeSection/notification/notification.vue";
 import userCreate from "@/components/Home/homeScreen/homeSection/create/create.vue";
 import userfeed from "@/components/Home/homeScreen/homeSection/feed/user-feed.vue";
@@ -62,12 +63,18 @@ const router = createRouter({
         {
           path: "Message",
           name: "Message",
-          component: userMessage,
+          component: userMessageList,
         },
         {
           path: "user/:username",
           name: "user",
           component: UserProfile,
+        },
+        {
+          path: "Message/:userMessage",
+          name: "userMessage",
+          component: userMessage,
+          props: true
         },
       ],
     },

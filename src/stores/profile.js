@@ -10,7 +10,7 @@ export const useProfileStore  = defineStore('profile',{
         },
         mainUserDetails: null,
         editOpen : false
-        
+
     }),
     actions: {
         updateUserdetails(name, email, phone, profile){
@@ -24,6 +24,7 @@ export const useProfileStore  = defineStore('profile',{
             this.mainUserDetails = data
         },
         updateEditOpen(data){
+            console.log("data from stor",data)
             this.editOpen = data
         }
     },
