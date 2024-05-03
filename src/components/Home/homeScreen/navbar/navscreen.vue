@@ -81,7 +81,7 @@ const outside = () => {
     padding: 5px;
     width: 99%;
     height: 54px;
-    background: #3a3a3c;
+    background: #1d1d1f;
     border-radius: 5px;
 }
 

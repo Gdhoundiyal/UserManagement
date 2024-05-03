@@ -100,8 +100,7 @@ const outside = () => {
   margin-top: 2rem;
   width: 50vw;
   border-radius: 5px;
-  border: 1px solid;
-  background: #040505;
+  background: #161617
 }
 
 .header {
@@ -118,8 +117,8 @@ const outside = () => {
 .line {
   height: 1px;
   width: 100%;
-  margin: 25px 0px;
-  background-color: #444;
+  margin: 22px 0px;
+  background-color: #272727;
 }
 
 .inputdiv {
@@ -127,7 +126,7 @@ const outside = () => {
 }
 
 .inputbox {
-  background: #303030;
+  background: #1c1c1c;
   border: none;
   border-radius: 5px;
   padding: 10px;
@@ -142,7 +141,6 @@ const outside = () => {
   display: flex;
   justify-content: center;
   width: 100%;
-  border: 1px solid;
   padding: 30px 0;
   border-radius: 5px;
 }
@@ -157,7 +155,7 @@ const outside = () => {
 
 .imagediv {
   height: 11.5rem;
-  border: 1px solid;
+  border: 1px solid #3c3c3c;
   width: 11rem;
   border-radius: 5px;
   margin-bottom: 25px;

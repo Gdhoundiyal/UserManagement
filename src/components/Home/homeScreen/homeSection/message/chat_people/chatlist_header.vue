@@ -24,13 +24,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #171717;
+    background-color: #101010;
     padding: 11px 10px;
     border-radius: 5px;
 }
 
 .search {
-    background-color: #171717;
+    width: 40vw;
+    background-color: #101010;
     border: none;
     font-size: 14px;
     color: #878A92;

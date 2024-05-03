@@ -38,12 +38,14 @@ const userData = JSON.parse( props.userdetails);
 <style scoped>
 .Container {
   display: flex;
-  width: 67vw;
   justify-content: space-between;
   align-items: center;
   padding: 13px 8px;
-  background-color: #343535b8;
   gap: 20px;
+  width: 64%;
+  position: fixed;
+  background-color: #202020b8;
+  border-radius: 5px;
 }
 
 .User-container {

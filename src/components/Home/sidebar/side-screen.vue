@@ -81,7 +81,7 @@ const outside = () => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: #3a3a3c;
+  background: #1d1d1f;
   border-radius: 5px;
 }
 
@@ -95,7 +95,7 @@ const outside = () => {
   text-decoration: none;
 }
 .routestyle:hover {
-  background-color: #3a3b3c;
+  background-color: #1e1e1f;
     border-radius: 5px;
 }
 

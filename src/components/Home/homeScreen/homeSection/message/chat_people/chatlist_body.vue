@@ -36,12 +36,12 @@ console.log(props.userdetails.name)
 <style scoped>
 .Container {
   padding: 15px 30px;
- border-bottom: 1px solid #3f3e3e;
+ border-bottom: 1px solid #272727;
   display: flex;
 
 }
 .Container:hover {
-  background-color: #424242;   
+  background-color: #272727;   
 }
 
 .header-box {

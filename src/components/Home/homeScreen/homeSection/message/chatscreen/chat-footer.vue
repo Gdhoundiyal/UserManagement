@@ -1,13 +1,15 @@
 <script setup>
+import { useMessageStore } from '@/stores/Messages';
 import { ref } from 'vue';
 
-
+const messageStore = useMessageStore()
 const message = ref(null)
 
 const sendMsg = () =>{
-    console.log("heiii", message)
-   const msg = JSON.stringify( message.value) 
-   console.log(msg)
+    const data =  {msg: message.value}
+    console.log("footer", data)
+   messageStore.updatedMsg(data, message.value)
+   message.value = null
 }
 </script>
 <template>
@@ -38,14 +40,16 @@ const sendMsg = () =>{
 <style scoped>
 .Container {
     display: flex;
-    width: 67vw;
+    width: 64%;
     justify-content: space-evenly;
     align-items: center;
-    padding: 23px 15px 16px 15px;
-    background-color: #343535b8;
+    padding: 13px 8px;
+    background-color: #202020b8;
     position: fixed;
-    bottom: 0;
+    bottom: 5px;
+    border-radius: 5px;
     gap: 20px;
+    border-top: 1px solid black;
 }
 .firstIconBox{
     flex: 0 0 auto;
@@ -58,14 +62,13 @@ const sendMsg = () =>{
 
 .Inputbox{
     flex: 1 0;
-    background: #262626;
+    background: #1d1c1c;
     border-radius: 5px;
 }
 .Inputfield{
     height: 36px;
-    border-bottom: #262626;
-    background: #262626;
-    border-right: #262626;
+    background: #0d0d0d;
+    border: #383838;
     font-size: 15px;
     width: 100%;
     color: #878A92;
@@ -96,9 +99,9 @@ input:focus {
     margin-right: 15px;
 }
 
-@media screen and (max-width: 990px) {
+/* @media screen and (max-width: 990px) {
   .Container {
     width: 98vw;
   }
-}
+} */
 </style>

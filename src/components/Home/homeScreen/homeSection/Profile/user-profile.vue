@@ -147,7 +147,7 @@ const closeEditModal = () => {
 .profilecontainer {
   width: 53vw;
   padding: 20px;
-  border: 1px solid #888;
+  background-color:  #161616;
   border-radius: 5px;
 }
 
@@ -156,7 +156,7 @@ const closeEditModal = () => {
   justify-content: space-evenly;
   align-items: center;
   padding: 20px;
-  border: 1px solid #888;
+  background-color: #1b1b1b;
   border-radius: 5px;
 }
 

@@ -36,14 +36,14 @@ state.Authenticate = access_token
 #Header-Sec {
   height: 100vh;
   width: 20vw;
-  background-color: #2e2e2e;
+  background-color: #121212;
   color: #878a92;
 }
 
 #Chat-Sec {
   height: 100vh;
   width: 80vw;
-  background: #262626;
+  background: #0e0f0f;
   color: #878a92;
 }
 

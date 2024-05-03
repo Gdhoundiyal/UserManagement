@@ -56,10 +56,10 @@ const userDetailsWithImage = [
     </div>
 </template>
 
-<style>
+<style scoped>
 .container{
-    width: 62%;
-    background: #303030;
+    width: 75%;
+    background: #131313;
     border-radius: 5px;
     padding: 25px 10px 15px 10px;
 }
@@ -67,7 +67,6 @@ const userDetailsWithImage = [
     margin-bottom: 20px;
 }
 .chatbodylist{
-    overflow: scroll;
-    scrollbar-width: none;
+  
 }
 </style>
