@@ -1,52 +1,11 @@
 <script setup>
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
-import { ref, watch } from "vue";
-import { object } from 'yup';
-import userPost from '../user-post.vue';
 
 const store = useProfileStore()
 const {userdetails} = storeToRefs(store)
 console.log(userdetails.value)
 
-
-const profileStore = useProfileStore();
-const name2 = ref(profileStore.userdetails.name);
-const profile = ref(profileStore.userdetails.profile);
-const openeditMOdal = ref(profileStore.editOpen);
-console.log("openeditMOdal", openeditMOdal)
-
-const openViewImg = ref(false);
-const openEditModal = ref(false);
-const updatedImg = ref(false);
-
-const user =   { 
-    name: "Andrew", 
-    imageUrl: "https://source.unsplash.com/800x600/?nature,water", 
-    profileimageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
-    description: "A stunning view of nature and water. Enjoy the beauty of the outdoors." 
-  };
-
-  const imgViewModal = () => {
-  openViewImg.value = true;
-};
-
-const closeImgModal = () => {
-  openViewImg.value = false;
-};
-
-const openEdit = () => {
-  openEditModal.value = true;
-};
-const closeEditModal = () => {
-  openEditModal.value = false;
-};
-
-const props = defineProps({
-    user: object
-})
-
-console.log(props)
 </script>
 <template>
     <div class="container">
