@@ -13,9 +13,22 @@ const { editOpen, userdetails } = storeToRefs(store)
 let openmod = ref(false)
 // console.log("valuessssss",updateUserdetails,userdetails)
 
+const userDetailsWithImage = [
+    { name: "Andrew", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Emma", imageUrl: "https://picsum.photos/200/300" },
+    { name: "James", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Olivia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "William", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Sophia", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Michael", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Isabella", imageUrl: "https://picsum.photos/200/300" },
+    { name: "John", imageUrl: "https://picsum.photos/200/300" },
+    { name: "Amelia", imageUrl: "https://picsum.photos/200/300" },
+
+];
 
 function sendData(event) {
-    console.log(event.currentTarget.getAttribute('photoId'))
+    // console.log(event.currentTarget.getAttribute('name'))
     store.updateUserdetails({ name: event.currentTarget.getAttribute('name'), photoId: "kjhakjhsu98123hj345" })
 }
 
@@ -27,6 +40,7 @@ function openEdit() {
 
 const outside = () => {
     // console.log("clicked outside")
+    openmod.value = false
 }
 const props = defineProps({
     user: object
@@ -34,7 +48,7 @@ const props = defineProps({
 )
 
 
-console.log(props.user)
+// console.log(props.user)
 // console.log(props.user)
 
 </script>
@@ -47,12 +61,12 @@ console.log(props.user)
                 <div class="User-container">
                     <div class="User-box">
                         <div class="img-div">
-                            <img :src=user.profileimageUrl alt="An Image of a Man" height="34px"
+                            <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
                                 width="34px" class="image">
                            
                         </div>
                     </div>
-                    <router-link  :to="{ name: 'user', params: { username: user.name }}" :user="props.user" @click="sendData" class="UserName">
+                    <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" class="UserName">
                             <p>{{ props.user.name }}</p>
                         </router-link>
                 
@@ -78,7 +92,6 @@ console.log(props.user)
                     <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/>
                 </div>
             </div>
-            
             <div class="icon-box">
                 <div class="piDiv">
                     <i class="pi pi-thumbs-up iconstyle">10</i>
@@ -91,10 +104,6 @@ console.log(props.user)
                     <i class="pi pi-share-alt iconstyle">2</i>
                 </div>
             </div>
-            <div class="description">
-                <p class="descontent"> {{ user.description }}</p>
-            </div>
-           
         </div>
     </div>
     <!-- </div> -->
@@ -114,7 +123,7 @@ console.log(props.user)
 
 .feedCont {
     width: 50vw;
-    background-color: #1d1d1d;
+    background-color: #3a3a3a;
     padding: 20px;
     margin: 8px 0;
     border-radius: 5px
@@ -134,7 +143,7 @@ console.log(props.user)
 }
 .UserName{
     text-decoration: none;
-    color: white
+    color: #878a92
 }
 .User-box {
     display: flex;
@@ -169,7 +178,7 @@ console.log(props.user)
     height: 22rem;
     width: 90%;
     margin: 10px 0;
-    border: 1px solid #202121;
+    border: 1px solid #898e8e;
     border-radius: 5px;
 }
 
@@ -191,7 +200,7 @@ console.log(props.user)
 
 .piDiv {
     width: 5vw;
-    color: white;
+    color: #878a92;
     border-radius: 4px;
     padding: 5px;
     display: flex;
@@ -213,7 +222,7 @@ console.log(props.user)
     left: -24px;
     z-index: 10;
     width: 3.5rem;
-    background: #010101;
+    background: #393941;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -231,12 +240,4 @@ console.log(props.user)
     font-size: 14px
 }
 
-.description{
-    display: flex; 
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    height: 20px;
-    margin-left: 25px;
-}
 </style>

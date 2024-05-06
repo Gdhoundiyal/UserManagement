@@ -74,7 +74,13 @@ const onSubmit = handleSubmit((vlaues) => {
       }
     );
 
-
+  setTimeout(() => {
+    store.$patch((state) => {
+      state.isloading = false;
+      alert("user sign up Successfully");
+      router.push("/");
+    });
+  }, 4000);
 });
 </script>
 
@@ -153,8 +159,9 @@ const onSubmit = handleSubmit((vlaues) => {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  background-color: #000;
+  background-color: #201d22;
   color: white;
+  
 }
 
 /* Right container */
@@ -164,19 +171,17 @@ const onSubmit = handleSubmit((vlaues) => {
   align-items: center;
   width: 55vw;
   margin: 20px;
-  background-color: #2c282e;;
+  background-color: #2c282e;
   border-radius: 10px;
-  
-  padding: 30px;
+  scrollbar-width: none;
 }
 
 .logindiv {
   width: 35vw;
   padding: 20px 30px;
-  background-color: #201d22;
+  background-color: #2c282e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
  
 }
 
@@ -226,7 +231,7 @@ const onSubmit = handleSubmit((vlaues) => {
   border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
-  background-color: #0d0c0d;
+  background-color: #201d22;
   color: #fff
 }
 

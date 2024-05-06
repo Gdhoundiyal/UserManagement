@@ -71,7 +71,7 @@ const sendMsg = () =>{
     border: #383838;
     font-size: 15px;
     width: 100%;
-    color: white;
+    color: #878A92;
     padding: 5px;
     border-radius: 6px;
 }

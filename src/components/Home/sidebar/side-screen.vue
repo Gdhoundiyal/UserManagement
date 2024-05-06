@@ -33,14 +33,14 @@ const outside = () => {
           <p>Home</p>
         </div>
       </RouterLink>
-      <RouterLink  class="routestyle">
-        <div class="icon-div" name="Search">
+      <RouterLink to="/home/Search" class="routestyle">
+        <div class="icon-div" name="Search" @click="changeScreen">
           <i class="pi pi-search" id="styles"></i>
           <p>Search</p>
         </div>
       </RouterLink>
-      <RouterLink  class="routestyle">
-        <div class="icon-div" name="Notification" >
+      <RouterLink to="/home/Notification" class="routestyle">
+        <div class="icon-div" name="Notification" @click="changeScreen">
           <i class="pi pi-bell" id="styles"></i>
           <p>Notification</p>
         </div>
@@ -91,7 +91,7 @@ const outside = () => {
 }
 
 .routestyle {
-  color: white;
+  color: #878a92;
   text-decoration: none;
 }
 .routestyle:hover {

@@ -169,19 +169,20 @@ const updateProfile = async () => {
 }
 .inputbox {
   display: flex;
-    padding: 10px;
-    background: #141411;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    border-radius: 5px;
-    margin-top: 20px;
+  padding: 10px;
+  border: 1px solid;
+  background: #5c5c57;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 .inputSection {
   margin-bottom: 15px;
 }
 .input {
-  background: #141411;
+  background: #5c5c57;
   color: white;
   border: #5c5c57;
   padding: 3px 0 0 0;
