@@ -58,17 +58,17 @@ watch(sendMsg, (newSendMsg) => {
 
 <style scoped>
 .msgcontainer {
-  overflow-y: auto;
+  overflow: scroll;
+  /* height: 100%; */
   scrollbar-width: none;
   background-color: #131313;
   padding: 0px 8px 10px 8px; 
-  display: flex;
-  flex-direction: column;
+  
+
 }
 
 .msgdiv {
   padding: 7px 10px;
-  margin-top: auto;
 }
 .chat-page {
   padding: 0 0 35px 0;
@@ -76,19 +76,17 @@ watch(sendMsg, (newSendMsg) => {
 
 .float-left{
   overflow: hidden;
-  color: #b8b8b8;
   float: right;
   padding-right: 10px;
   display: flex;
-  align-items: flex-end;
+  align-items: end;
 }
 .float-right {
   overflow: hidden;
   float: left;
-  color: #b8b8b8;
   padding-right: 10px;
   display: flex;
-  align-items: flex-end;
+  align-items: end;
 }
 .click{
     font-size: 12px;

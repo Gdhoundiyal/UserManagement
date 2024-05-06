@@ -150,7 +150,7 @@ const onSubmit = handleSubmit(values => {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #000000;
+  background-color: #201d22;
   color: white;
 }
 
@@ -161,7 +161,7 @@ const onSubmit = handleSubmit(values => {
   justify-content: center;
   align-items: center;
   width: 55vw;
- 
+  padding: 20px;
   background-color: #2c282e;
   border-radius: 10px;
   padding: 30px;
@@ -170,7 +170,7 @@ const onSubmit = handleSubmit(values => {
 .logindiv {
   width: 35vw;
   padding: 30px;
-  background-color:   #201d22;
+  background-color: #2c282e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
@@ -216,7 +216,7 @@ const onSubmit = handleSubmit(values => {
   border: 1px solid #201d22;
   border-radius: 5px;
   box-sizing: border-box;
-  background-color: #0d0c0d;
+  background-color: #201d22;
   color: #fff
 }
 

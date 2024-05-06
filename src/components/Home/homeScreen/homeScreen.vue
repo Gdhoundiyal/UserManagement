@@ -6,7 +6,6 @@ import { BASE_URL } from '@/assets/assets';
 import { useloginStore } from '@/stores/login';
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
-import router from '@/router';
 
 const loginstore = useloginStore()
 const profileStore = useProfileStore()
@@ -24,9 +23,7 @@ const {Authenticate} = storeToRefs(loginstore)
     }).then((response)=>{
         profileStore.updatemainUserDetails(response.data)
     }).catch((error)=>{
-        console.log(error)
-        localStorage.clear()
-        router.push('/')
+        // console.log(error)
     })
 }
 

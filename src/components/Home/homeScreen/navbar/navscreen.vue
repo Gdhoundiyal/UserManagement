@@ -61,7 +61,7 @@ const outside = () => {
             <div class="imagediv" @click="logoutOn">
                 <img v-if="updatedImg" :src="profile" alt="an image of a boy" height="45px" width="45px"
                     class="image" />
-                <img v-else src="../../../../assets/adamzempa.jpg" alt="an image of user" height="45px" width="45px"
+                <img v-else src="../../../../assets/userImg.jpg" alt="an image of a boy" height="45px" width="45px"
                     class="image" />
                 <div>
                 <div v-if="logoutbtn" class="logoutdiv">
