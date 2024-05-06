@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from "vue";
 import { object } from 'yup';
 import userPost from '../user-post.vue';
-import router from '@/router';
 
 const store = useProfileStore()
 const {userdetails} = storeToRefs(store)
@@ -42,10 +41,6 @@ const openEdit = () => {
 const closeEditModal = () => {
   openEditModal.value = false;
 };
-
-const openChat = () => {
-//    router.push({ name: 'userMessage', params: { userMessage: 'value' }});
-}
 
 const props = defineProps({
     user: object
@@ -102,7 +97,7 @@ console.log(props)
         <div class="Editdiv">
             <div class="follow">
                 <p class="Editbtn" @click="openEdit">Follow</p>
-                <p class="Editbtn" @click="openChat">Message</p>
+                <p class="Editbtn" @click="openEdit">Message</p>
           <!-- <p class="Editbtn" @click="openEdit">Edit Profile</p> -->
         </div>
           <div v-if="openEditModal" class="modalContainer">

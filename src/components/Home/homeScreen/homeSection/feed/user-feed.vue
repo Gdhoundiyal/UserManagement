@@ -25,8 +25,20 @@ const userDetailsWithImage = [
 
 ];
 
+function sendData(event) {
+    console.log(event.currentTarget.getAttribute('name'))
+    store.updateUserdetails({name: event.currentTarget.getAttribute('name') ,photoId: "kjhakjhsu98123hj345"})
+}
 
+// function openEdit(){
+// //     console.log("clicked")
+// //    store.updateEditOpen(true)
+// openmod.value = true
+// }
 
+// const outside = () => {
+//     openmod.value = false
+// }
 
 </script>
 
