@@ -42,9 +42,7 @@ const outside = () => {
     <div    class="container "  v-click-outside="outside">
       <div class="header">
         <div class="Heading">Create a Post</div>
-        <div class="Heading">
-          <i class="pi pi-times"></i>
-        </div>
+      
       </div>
       <div class="line"></div>
       <div class="content">
@@ -103,12 +101,6 @@ const outside = () => {
   background: #161617
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .Heading {
   font-size: 20px;
   font-weight: 300;
@@ -118,7 +110,7 @@ const outside = () => {
   height: 1px;
   width: 100%;
   margin: 22px 0px;
-  background-color: #272727;
+  background-color: #222222;
 }
 
 .inputdiv {
@@ -126,11 +118,11 @@ const outside = () => {
 }
 
 .inputbox {
-  background: #1c1c1c;
+  background: #0a0808;
   border: none;
   border-radius: 5px;
   padding: 10px;
-  color: #757575;
+  color: white;
 }
 
 .inputbox:focus {

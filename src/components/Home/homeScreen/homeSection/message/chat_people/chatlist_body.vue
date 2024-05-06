@@ -82,7 +82,7 @@ console.log(props.userdetails.name)
 
 .Name{
   text-decoration: none;
-  color: #cecccc;
+  color: white;
   font-size: 18px;
   width: 100%;
   padding: 10px;

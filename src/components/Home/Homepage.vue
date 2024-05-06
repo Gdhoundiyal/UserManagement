@@ -31,20 +31,21 @@ state.Authenticate = access_token
 #App-Container {
   display: flex;
   overflow: hidden;
+  scrollbar-width: none;
 }
 
 #Header-Sec {
   height: 100vh;
   width: 20vw;
   background-color: #121212;
-  color: #878a92;
+  color: white
 }
 
 #Chat-Sec {
   height: 100vh;
   width: 80vw;
   background: #0e0f0f;
-  color: #878a92;
+  color: white;
 }
 
 

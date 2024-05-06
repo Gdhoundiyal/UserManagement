@@ -1,5 +1,5 @@
 <template>
-   <img class="modalprofileimg"src="../../../../../assets/userImg.jpg" alt="An Image of a Man" height="300px" width="300px">
+   <img class="modalprofileimg"src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="300px" width="300px">
 </template>
 
 <script setup>

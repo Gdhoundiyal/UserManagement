@@ -30,6 +30,7 @@ console.log("userdatafrom props", props.userMessage)
     top: 162px;
     padding: 13px 8px;
     width: 64%;
-    height: 61.7vh;;
+    height: 61.7vh;
+
 }
 </style>

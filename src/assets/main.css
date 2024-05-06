@@ -1,7 +1,8 @@
 @import "primeicons/primeicons.css";
 
 body{
-  background: #777;
+  background: #0d0d0d;
+  color: white;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

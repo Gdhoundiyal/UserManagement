@@ -34,7 +34,7 @@
     background-color: #101010;
     border: none;
     font-size: 14px;
-    color: #878A92;
+    color: white;
 }
 .pi-search {
    cursor: pointer;

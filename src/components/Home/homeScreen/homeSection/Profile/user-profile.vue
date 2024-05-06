@@ -16,7 +16,12 @@ const openViewImg = ref(false);
 const openEditModal = ref(false);
 const updatedImg = ref(false);
 
-const user = { name: "SHoleyky" };
+const user =   { 
+    name: "Andrew", 
+    imageUrl: "https://source.unsplash.com/800x600/?nature,water", 
+    profileimageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+    description: "A stunning view of nature and water. Enjoy the beauty of the outdoors." 
+  };
 
 watch(
   () => profileStore.userdetails.name,
@@ -74,7 +79,7 @@ const closeEditModal = () => {
             v-else
             class="profileimg"
             @click="imgViewModal"
-            src="../../../../../assets/userImg.jpg"
+            src="../../../../../assets/adamzempa.jpg"
             alt="An Image of a Man"
             height="150px"
             width="150px"
@@ -147,7 +152,7 @@ const closeEditModal = () => {
 .profilecontainer {
   width: 53vw;
   padding: 20px;
-  background-color:  #161616;
+  background-color:  #000;
   border-radius: 5px;
 }
 
@@ -202,7 +207,7 @@ const closeEditModal = () => {
 
 .biodiv {
   padding: 20px;
-  border: 1px solid #888;
+ background-color: #1b1b1b;
   border-radius: 5px;
 }
 
@@ -214,7 +219,7 @@ const closeEditModal = () => {
 
 .Editdiv {
   padding: 10px;
-  border: 1px solid #888;
+
   text-align: center;
   border-radius: 5px;
 }
@@ -235,7 +240,7 @@ const closeEditModal = () => {
 
 .feedCont {
   width: 50vw;
-  background-color: #3a3a3a;
+  background-color: #1a1a1a;
   padding: 20px;
   margin: 8px 0;
   border-radius: 5px;
@@ -309,7 +314,7 @@ const closeEditModal = () => {
 
 .piDiv {
   width: 5vw;
-  color: #878a92;
+  color: white;
   border-radius: 4px;
   padding: 5px;
   display: flex;
