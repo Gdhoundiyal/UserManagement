@@ -12,6 +12,7 @@ export const useloginStore = defineStore("Login",{
     },
     Authenticate: token,
     isloading: false,
+    logoutbtn: false,
   }),
   getters: {},
  actions: {

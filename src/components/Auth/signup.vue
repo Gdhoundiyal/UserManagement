@@ -41,13 +41,10 @@ const [username, usernameAttrs] = defineField("username");
 const [email, emailAttrs] = defineField("email");
 const [password, passwordAttrs] = defineField("password");
 const [phone_number, phone_numberAttrs] = defineField("phone_number");
-// localStorage.setItem("name" = "girish")
 
 // Functions //
 const onSubmit = handleSubmit((vlaues) => {
   console.log(vlaues);
-
-
   store.updateSignupDetails(vlaues);
   store.$patch((state) => {
     state.isloading = true;

@@ -2,12 +2,15 @@
 
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+import userpost from './user-post.vue'
 
 const store = useProfileStore()
-const {userdetails,updateUserdetails} = storeToRefs(store)
+const {editOpen } = storeToRefs(store)
 
-console.log("valuessssss",updateUserdetails,userdetails)
+// console.log("valuessssss",updateUserdetails,userdetails)
 
+let openmod = ref(false)
 const userDetailsWithImage = [
     { name: "Andrew", imageUrl: "https://picsum.photos/200/300" },
     { name: "Emma", imageUrl: "https://picsum.photos/200/300" },
@@ -19,16 +22,7 @@ const userDetailsWithImage = [
     { name: "Isabella", imageUrl: "https://picsum.photos/200/300" },
     { name: "John", imageUrl: "https://picsum.photos/200/300" },
     { name: "Amelia", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Robert", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Charlotte", imageUrl: "https://picsum.photos/200/300" },
-    { name: "David", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Mia", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Joseph", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Abigail", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Daniel", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Emily", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Matthew", imageUrl: "https://picsum.photos/200/300" },
-    { name: "Harper", imageUrl: "https://picsum.photos/200/300" }
+
 ];
 
 function sendData(event) {
@@ -36,53 +30,22 @@ function sendData(event) {
     store.updateUserdetails({name: event.currentTarget.getAttribute('name') ,photoId: "kjhakjhsu98123hj345"})
 }
 
+// function openEdit(){
+// //     console.log("clicked")
+// //    store.updateEditOpen(true)
+// openmod.value = true
+// }
+
+// const outside = () => {
+//     openmod.value = false
+// }
+
 </script>
 
 <template>
-    <div v-for="(user, index) in userDetailsWithImage" :key="index">
-        <div>
-            <div class="feedCont">
-                <div class="user-feed">
-                    <div class="User-container">
-                        <div class="User-box">
-                            <div class="img-div">
-                                <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man" height="34px"
-                                    width="34px" class="image">
-                                <div class="Status"></div>
-                            </div>
-                           
-                        </div>
-                        <router-link  :to="{ name: 'user', params: { username: user.name }}" :name="user.name" @click="sendData" >
-                            <p>{{ user.name }}</p>
-                        </router-link>
-                    </div>
-                    <div class="useroption">
-                        <i class="pi pi-ellipsis-v option"></i>
-                    </div>
-                </div>
-                <div class="media-cont">
-
-                    <div class="media-box">
-                        <img :src="user.imageUrl" alt="An Image of a Man" class="mediaImage"/>
-                    </div>
-                </div>
-                <div class="icon-box">
-                    <div class="piDiv">
-                        <i class="pi pi-heart iconstyle"></i>
-                    </div>
-                    <div class="piDiv">
-                        <i class="pi pi-comment iconstyle"></i>
-                    </div>
-                    <div class="piDiv">
-                        <i class="pi pi-share-alt iconstyle"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <userpost v-for="(user, index) in userDetailsWithImage" :key="index" :user="user"/>
 </template>
-<style>
+<style scoped >
 .container {
     display: flex;
     flex-direction: column;
@@ -91,7 +54,6 @@ function sendData(event) {
     overflow: scroll;
     height: 88vh;
     scrollbar-width: none;
-
 }
 
 .feedCont {

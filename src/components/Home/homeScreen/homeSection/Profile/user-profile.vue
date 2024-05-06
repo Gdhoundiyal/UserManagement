@@ -1,293 +1,340 @@
 <script setup>
-
-// import CustomModal from '../../../../generalcomponents/modal.vue'
-import { useProfileStore } from '@/stores/profile';
-import { storeToRefs } from 'pinia';
-
-const store = useProfileStore()
-const {showModal} = storeToRefs(store)
-console.log(showModal)
+import { ref, watch } from "vue";
+import userPost from "../feed/user-post.vue";
+import imageModal from "./imageModal.vue";
+import editModal from "./editModal.vue";
+import { useProfileStore } from "@/stores/profile";
 
 
-const userDetails = [
-    { name: "Andrew" },
-    { name: "Emma" },
-    { name: "James" },
-    { name: "Olivia" },
-    { name: "William" },
-    { name: "Sophia" },
-];
-// let showModal = false;
+const profileStore = useProfileStore();
+const name = ref(profileStore.userdetails.name);
+const profile = ref(profileStore.userdetails.profile);
+const openeditMOdal = ref(profileStore.editOpen);
+console.log("openeditMOdal", openeditMOdal)
 
-function openModal() {
-    console.log("opening")
-    showModal = true;
+const openViewImg = ref(false);
+const openEditModal = ref(false);
+const updatedImg = ref(false);
+
+const user = { name: "SHoleyky" };
+
+watch(
+  () => profileStore.userdetails.name,
+  (newValue) => {
+    name.value = newValue;
+  }
+);
+watch(
+  () => profileStore.userdetails.profile,
+  (newValue) => {
+    profile.value = newValue;
+    updatedImg.value = true;
+  }
+);
+
+watch(
+    ()=> profileStore.editOpen,
+    (newValue) => {
+        openeditMOdal.value = false
+    }
+)
+
+
+const imgViewModal = () => {
+  openViewImg.value = true;
 };
-function closeModal() {
-    showModal = false;
-}
 
+const closeImgModal = () => {
+  openViewImg.value = false;
+};
+
+const openEdit = () => {
+  openEditModal.value = true;
+};
+const closeEditModal = () => {
+  openEditModal.value = false;
+};
 </script>
 
 <template>
-    <div class="container">
-        <div class="profilecontainer">
-            <div class="profile">
-                <div class="imagediv">
-                </div>
-                <div class="following-post-div">
-                    <div class="post-div">
-                        <p class="postNum">10</p>
-                        <p class="posttext">Post</p>
-                    </div>
-                    <div class="following-div">
-                        <p class="followingNum">15</p>
-                        <p class="followingtext">following</p>
-                    </div>
-                    <div class="follower-div">
-                        <p class="followerNum">20</p>
-                        <p class="followertext">follower</p>
-                    </div>
-                </div>
-            </div>
-            <div class="biodiv">
-                <p>Aderson Mathew</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    t
-                    illum esse non quaerat minima nam.</p>
-                <p>m rem officiis quam, voluptatum consequuntur? Qui amet
-                    illum esse non quaerat minima nam.</p>
-            </div>
-            <div class="Editdiv">
-                <p>Edit Profile</p>
-            </div>
-            <!-- <div>
-                <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+  <div class="container">
+    <div class="profilecontainer">
+      <div class="profile">
+        <div class="imagediv">
+          <img
+            v-if="updatedImg"
+            class="profileimg"
+            @click="imgViewModal"
+            :src="profile"
+            alt="An Image of a Man"
+            height="150px"
+            width="150px"
+          />
+          <img
+            v-else
+            class="profileimg"
+            @click="imgViewModal"
+            src="../../../../../assets/userImg.jpg"
+            alt="An Image of a Man"
+            height="150px"
+            width="150px"
+          />
 
-                <b-modal id="modal-1" title="BootstrapVue">
-                    <p class="my-4">Hello from modal!</p>
-                </b-modal>
-            </div> -->
-            <!-- <div v-for="(user, index) in userDetails" :key="index">
-                <div>
-                    <div class="feedCont">
-                        <div class="user-feed">
-                            <div class="User-container">
-                                <div class="User-box">
-                                    <div class="img-div">
-                                        <img src="../../../../../assets/adamzempa.jpg" alt="An Image of a Man"
-                                            height="34px" width="34px" class="image">
-                                        <div class="Status"></div>
-                                    </div>
-                                </div>
-                                <p>{{ user.name }}</p>
-                            </div>
-                            <div class="useroption">
-                                <i class="pi pi-ellipsis-v option"></i>
-                            </div>
-                        </div>
-                        <div class="media-cont">
-                            <div class="media-box"></div>
-                        </div>
-                        <div class="icon-box">
-                            <div class="piDiv">
-                                <i class="pi pi-heart iconstyle"></i>
-                            </div>
-                            <div class="piDiv">
-                                <i class="pi pi-comment iconstyle"></i>
-                            </div>
-                            <div class="piDiv">
-                                <i class="pi pi-share-alt iconstyle"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <div>
-                <div>
-                    <button @click="openModal">Open Modal</button>
-                    <p  v-if="showModal">Modal Content Goes Here</p>
-                    <!-- <CustomModal v-if="showModal" @close="closeModal">
-                        <button @click="closeModal">Close</button>
-                    </CustomModal> -->
-                </div>
-            </div>
+          <div v-if="openViewImg" class="modalContainer">
+            <imageModal
+              v-click-outside="closeImgModal"
+              imagePath="image123.jpg"
+            />
+          </div>
         </div>
+        <div class="following-post-div">
+          <div class="post-div">
+            <p class="postNum">10</p>
+            <p class="posttext">Post</p>
+          </div>
+          <div class="following-div">
+            <p class="followingNum">15</p>
+            <p class="followingtext">following</p>
+          </div>
+          <div class="follower-div">
+            <p class="followerNum">20</p>
+            <p class="followertext">follower</p>
+          </div>
+        </div>
+      </div>
+      <div class="biodiv">
+        <p v-if="updatedImg">{{ name }}</p>
+        <p v-else>Aderson Mathew</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. t illum esse
+          non quaerat minima nam.
+        </p>
+        <p>
+          m rem officiis quam, voluptatum consequuntur? Qui amet illum esse non
+          quaerat minima nam.
+        </p>
+      </div>
+      <div class="Editdiv">
+        <p class="Editbtn" @click="openEdit">Edit Profile</p>
+        <div v-if="openEditModal" class="modalContainer">
+          <editModal v-click-outside="closeEditModal" />
+        </div>
+      </div>
+      <userPost :user="user" />
     </div>
+  </div>
 </template>
 
 <style scoped>
 .container {
-    width: 60vw;
-    height: auto;
-    /* border: 1px solid white */
+  width: 60vw;
+  height: auto;
+  display: flex;
+    justify-content: center;
 }
-
+.modalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.62);
+  /* z-index: 999; */
+}
 .profilecontainer {
-    width: 53vw;
-    padding: 20px;
-    border: 1px solid #888;
-
+  width: 53vw;
+  padding: 20px;
+  background-color:  #161616;
+  border-radius: 5px;
 }
 
 .profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #888;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+  background-color: #1b1b1b;
+  border-radius: 5px;
+}
 
+.profileimg {
+  border-radius: 50%;
 }
 
 .following-post-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
 .following-post-div p {
-    margin: 5px
+  margin: 5px;
 }
 
 .imagediv {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    border: 1px solid white;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 1px solid white;
+  background-color: #888;
 }
 
 .post-div,
 .following-div,
 .follower-div {
-    height: 3rem;
-    width: 5rem;
-    margin: 10px;
-
+  height: 3rem;
+  width: 5rem;
+  margin: 10px;
 }
 
 .posttext,
 .followingtext,
 .followertext {
-    font-size: 18px;
-
+  font-size: 18px;
 }
 
 /* // biodiv // */
 
 .biodiv {
-    padding: 20px;
-    border: 1px solid #888
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
 }
 
 .biodiv p {
-    padding: 5px;
-
+  padding: 5px;
 }
 
 /* // Editdiv // */
 
 .Editdiv {
-    padding: 10px;
-    border: 1px solid #888;
-    text-align: center;
+  padding: 10px;
+  border: 1px solid #888;
+  text-align: center;
+  border-radius: 5px;
 }
 
 .Editdiv p {
-    font-size: 15px
+  font-size: 15px;
+}
+.Editbtn {
+  padding: 9px;
+  background-color: #6838cf;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* post section */
 
 .feedCont {
-    width: 50vw;
-    background-color: #3a3a3a;
-    padding: 20px;
-    margin: 8px 0;
-    border-radius: 5px
+  width: 50vw;
+  background-color: #3a3a3a;
+  padding: 20px;
+  margin: 8px 0;
+  border-radius: 5px;
 }
 
 .User-container {
-    display: flex;
-    align-items: center;
-    margin: 2px 8px
+  display: flex;
+  align-items: center;
+  margin: 2px 8px;
 }
 
 .user-feed {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .User-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .option {
-    font-size: 15px;
-
+  font-size: 15px;
 }
 
 .img-div {
-    margin-right: 10px;
-    display: flex;
+  margin-right: 10px;
+  display: flex;
 }
 
-
 .image {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .Status {
-    height: 7px;
-    width: 7px;
-    background-color: green;
-    border-radius: 50%;
-    position: relative;
-    top: 25px;
-    right: 7px;
+  height: 7px;
+  width: 7px;
+  background-color: green;
+  border-radius: 50%;
+  position: relative;
+  top: 25px;
+  right: 7px;
 }
 
 .media-cont {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* border: 1px solid black  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid black  */
 }
 
 .media-box {
-    height: 22rem;
-    width: 90%;
-    margin: 10px 0;
-    border: 1px solid #898e8e;
-    border-radius: 5px;
+  height: 22rem;
+  width: 90%;
+  margin: 10px 0;
+  border: 1px solid #898e8e;
+  border-radius: 5px;
 }
 
 .icon-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .iconstyle {
-    font-size: 22px
+  font-size: 22px;
 }
 
 .piDiv {
-    width: 5vw;
-    color: #878a92;
-    border-radius: 4px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 7px;
-    margin-top: 10px;
+  width: 5vw;
+  color: #878a92;
+  border-radius: 4px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 7px;
+  margin-top: 10px;
 }
 
- 
+.modalbg {
+  position: absolute;
+  z-index: 999;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  box-shadow: 0px, 10px, 5px, 2px rgb(0, 0, 0, 0.1);
+}
 </style>

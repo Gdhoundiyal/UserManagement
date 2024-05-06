@@ -1,42 +1,45 @@
 <script setup>
-import UserFeed from './homeSection/feed/user-feed.vue';
+import { onMounted } from 'vue';
 import Navscreen from './navbar/navscreen.vue';
+import axios from 'axios';
+import { BASE_URL } from '@/assets/assets';
+import { useloginStore } from '@/stores/login';
+import { useProfileStore } from '@/stores/profile';
+import { storeToRefs } from 'pinia';
 
-const userDetails = [
-    { name: "Andrew" },
-    { name: "Emma" },
-    { name: "James" },
-    { name: "Olivia" },
-    { name: "William" },
-    { name: "Sophia" },
-    { name: "Michael" },
-    { name: "Isabella" },
-    { name: "John" },
-    { name: "Amelia" },
-    { name: "Robert" },
-    { name: "Charlotte" },
-    { name: "David" },
-    { name: "Mia" },
-    { name: "Joseph" },
-    { name: "Abigail" },
-    { name: "Daniel" },
-    { name: "Emily" },
-    { name: "Matthew" },
-    { name: "Harper" }
-];
+const loginstore = useloginStore()
+const profileStore = useProfileStore()
+
+const {mainUserDetails} = storeToRefs(profileStore)
+const {Authenticate} = storeToRefs(loginstore)
+
+ onMounted(()=>{
+    // console.log("homepage rendered")
+     if(mainUserDetails.value === null){
+    axios.get(`${BASE_URL}profile`,{
+        headers: {
+      Authorization: `Bearer ${Authenticate.value}`
+    }
+    }).then((response)=>{
+        profileStore.updatemainUserDetails(response.data)
+    }).catch((error)=>{
+        // console.log(error)
+    })
+}
+
+})
 </script>
 
 <template>
     <div class="navcontainer">
-        <Navscreen/>
+        <Navscreen />
         <div class="userfeedcontainer" >
             <router-view/>
-           
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 .navcontainer{
     padding: 7px
 }
