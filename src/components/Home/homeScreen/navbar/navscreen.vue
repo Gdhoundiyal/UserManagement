@@ -39,9 +39,9 @@ const logout = () => {
     store.$patch((state)=>{
         state.logoutbtn = false
     })
-    // localStorage.clear();
-    // route.push('/')
-    // console.log("logout",  Authenticate.value)
+    localStorage.clear();
+    route.push('/')
+    console.log("logout",  Authenticate.value)
 }
 const outside = () => {
     store.$patch((state)=>{
